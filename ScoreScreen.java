@@ -18,27 +18,12 @@ public class ScoreScreen extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
-        showBottons();
+                addObject(new BackBotton(),21,13);
+
     }
-    
-    public void showBottons(){
-        Botton backBotton = new BackBotton();
-        addObject(backBotton,21,13);
-    }
+
     public void act()
     {
-    MouseInfo mouse = Greenfoot.getMouseInfo();
-        if (mouse != null)
-        {
-            x = mouse.getX();
-            y = mouse.getY();
-        }
-          if (Greenfoot.mouseClicked(null))
-        {
-            if (((x > 0) && (x < 40)) && ((y > 0) && (y < 25)))
-            {
-                Greenfoot.setWorld(new MenuScreen());
-            }       
-        }
+    
     }
 }

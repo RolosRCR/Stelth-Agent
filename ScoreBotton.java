@@ -14,6 +14,13 @@ public class ScoreBotton extends Botton
      */
     public void act() 
     {
-        // Add your action code here.
+        super.act();
+        if (Greenfoot.mouseClicked(null))
+        {
+            if (((x > 225) && (x < 375)) && ((y > 255) && (y < 306)))
+            {
+                Greenfoot.setWorld(new ScoreScreen());
+            }  
+        }
     }    
 }

@@ -14,6 +14,6 @@ public class PlayBotton extends Botton
      */
     public void act() 
     {
-        // Add your action code here.
+        super.act();
     }    
 }

@@ -14,6 +14,13 @@ public class HelpBotton extends Botton
      */
     public void act() 
     {
-        // Add your action code here.
+        super.act();
+        if (Greenfoot.mouseClicked(null))
+        {
+            if (((x > 225) && (x < 375)) && ((y > 165) && (y < 216)))
+            {
+                Greenfoot.setWorld(new HelpScreen());
+            } 
+        }
     }    
 }
