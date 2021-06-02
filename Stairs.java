@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Stairs extends Actor
 {
     public Stairs(){
-        setImage("images/Escalera.png");   
+        setImage("images/Escalera3.png");   
     }
     /**
      * Act - do whatever the Escalera wants to do. This method is called whenever

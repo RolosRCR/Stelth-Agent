@@ -8,33 +8,44 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Nivel1 extends World
 {
-
+    private int limitPlatformWidth;
+    private int limitPlatformHigh;
+    private int sizePlatformHigh;
+    private int sizePlatformWidth;
+    private int highStairs;
     /**
      * Constructor for objects of class MyWorld.
      * 
      */
     public Nivel1()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         buildMap();
-        addObject(new Agent(), 250, 376);
+        addObject(new Agent(), 250, 380);
         
     }
     
     public void buildMap(){
-        int x=10;
-        for(int i=0; i<29; i++){
-            this.addObject(new PlatformSteel(), x, 395);
-            if(i<28){
-                this.addObject(new PlatformSteel(), x+21, 335);
-            }    
-            if(i==0){
-               this.addObject(new PlatformStone(), x, 335); 
+        int x=0;
+        int y=400;
+        sizePlatformHigh = 90;
+        sizePlatformWidth = 21;
+        limitPlatformWidth=600/sizePlatformWidth+1;
+        limitPlatformHigh=400/sizePlatformHigh;
+        highStairs=350;
+        for(int i=0; i<limitPlatformWidth; i++){
+            for(int j=0; j<limitPlatformHigh; j++){
+                 if(i% 5 ==0 && y != 400){
+                     this.addObject(new PlatformStone(), x, y);
+                     this.addObject(new Stairs(), x, highStairs);
+                 }
+                 else{
+                     this.addObject(new PlatformSteel(), x, y); 
+                 }
+                 y=y-sizePlatformHigh;
             }
-            x=x+21;
+            y=400;
+            x=x+sizePlatformWidth;
         }
-        
-        this.addObject(new Stairs(), 10, 360);
     }    
 }
