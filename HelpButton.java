@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class HelpBotton extends Botton
+public class HelpButton extends Button
 {
     /**
      * Act - do whatever the HelpBotton wants to do. This method is called whenever
@@ -14,13 +14,9 @@ public class HelpBotton extends Botton
      */
     public void act() 
     {
-        super.act();
-        if (Greenfoot.mouseClicked(null))
+        if (Greenfoot.mouseClicked(this))
         {
-            if (((x > 225) && (x < 375)) && ((y > 165) && (y < 216)))
-            {
-                Greenfoot.setWorld(new HelpScreen());
-            } 
+            Greenfoot.setWorld(new HelpScreen());
         }
     }    
 }

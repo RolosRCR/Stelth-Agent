@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class BackBotton extends Botton
+public class BackButton extends Button
 {
     /**
      * Act - do whatever the BackBotton wants to do. This method is called whenever
@@ -14,13 +14,9 @@ public class BackBotton extends Botton
      */
     public void act() 
     {
-       super.act();
-          if (Greenfoot.mouseClicked(null))
+        if (Greenfoot.mouseClicked(this))
         {
-            if (((x > 0) && (x < 40)) && ((y > 0) && (y < 25)))
-            {
-                Greenfoot.setWorld(new MenuScreen());
-            }       
+            Greenfoot.setWorld(new MenuScreen());   
         }
     }
 }    

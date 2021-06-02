@@ -32,8 +32,8 @@ public class InitialScreen extends World
 
     public void act()
     {
-    if(Greenfoot.isKeyDown("space"))
-    Greenfoot.setWorld(new MenuScreen());
+        if(Greenfoot.isKeyDown("space"))
+            Greenfoot.setWorld(new MenuScreen());
     }
-    
+
 }

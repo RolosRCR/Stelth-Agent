@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class PlayBotton extends Botton
+public class PlayButton extends Button
 {
     /**
      * Act - do whatever the PlayBotton wants to do. This method is called whenever
@@ -14,6 +14,5 @@ public class PlayBotton extends Botton
      */
     public void act() 
     {
-        super.act();
     }    
 }
