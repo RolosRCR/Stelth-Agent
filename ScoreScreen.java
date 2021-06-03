@@ -21,9 +21,4 @@ public class ScoreScreen extends World
         addObject(new BackButton(),21,13);
 
     }
-
-    public void act()
-    {
-
-    }
 }
