@@ -10,12 +10,12 @@ public class Agent extends Actor
     private static final int speed = 2;
     private int direction=1;
     
-    public ArrayList<String> skinAgentRight = new ArrayList();
-    public ArrayList<String> skinAgentLeft = new ArrayList();
-    public ArrayList<String> skinAgentJump = new ArrayList();
-    public ArrayList<String> skinAgentStairs = new ArrayList();
-    public ArrayList<String> skinAgentStanding = new ArrayList();
-	
+    private ArrayList<String> skinAgentRight = new ArrayList();
+    private ArrayList<String> skinAgentLeft = new ArrayList();
+    private ArrayList<String> skinAgentJump = new ArrayList();
+    private ArrayList<String> skinAgentStairs = new ArrayList();
+    private ArrayList<String> skinAgentStanding = new ArrayList();
+    
     public Agent(){
         skinAgentRight.add("Right");
         skinAgentLeft.add("Left");
