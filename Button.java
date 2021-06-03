@@ -9,7 +9,7 @@ import java.util.*;
  */
 public abstract class Button extends Actor
 {       
-    private List<Observer> observers = new LinkedList();
+    private List<Observer> observers = new LinkedList<>();
 
     public void addObserver(Observer observer)
     {
