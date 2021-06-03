@@ -8,11 +8,11 @@ public class Agent extends Actor
     private int counterUp;
     private int counterDown;
     private static final int SPEED = 2;
-    private static final int right=1;
-    private static final int left=2;
-    private static final int up=4;
-    private static final int down=3;
-    private static final int noMovementUpDown=0;
+    private static final int RIGHT=1;
+    private static final int LEFT=2;
+    private static final int UP=4;
+    private static final int DOWN=3;
+    private static final int NOMOVEMENT=0;
     private int direction;
     
     private ArrayList<String> skinAgentRight = new ArrayList();
@@ -43,18 +43,18 @@ public class Agent extends Actor
         int x = getX();
         int y = getY();
     
-        if(isTouching(Platform.class) && direction != down && direction != up){
+        if(isTouching(Platform.class) && direction != DOWN && direction != UP){
             if(Greenfoot.isKeyDown("right")){
                 moveRight(x, y);
             }   
             else if(Greenfoot.isKeyDown("left")){
                 moveLeft(x, y);
             }   
-            else if (direction != noMovementUpDown){
+            else if (direction != NOMOVEMENT){
                 standing(x, y); 
             }
         }  
-        if(isTouching(Stairs.class)  && direction != noMovementUpDown){
+        if(isTouching(Stairs.class)  && direction != NOMOVEMENT){
             if(Greenfoot.isKeyDown("down") && !isTouching(PlatformSteel.class)){                          
                 moveDown(x, y);
             }
@@ -63,19 +63,19 @@ public class Agent extends Actor
             }
             else if(direction==3 && isTouching(PlatformSteel.class)){
                 if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("left"))
-                    direction=noMovementUpDown;
+                    direction=NOMOVEMENT;
             }
         }
-        else if(!isTouching(Stairs.class) && direction == up){
+        else if(!isTouching(Stairs.class) && direction == UP){
             if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("left")){
                 setLocation(x, y + 6);
-                direction=noMovementUpDown;
+                direction=NOMOVEMENT;
             }
         }
     }
     
     private void moveLeft(int x, int y){
-        direction=left;
+        direction=LEFT;
         setLocation(x-SPEED, y);
         counterLeft++;
         counterRight=0;
@@ -88,7 +88,7 @@ public class Agent extends Actor
     }
     
     private void moveRight(int x, int y){
-        direction=right;
+        direction=RIGHT;
         setLocation(x+SPEED, y);
         counterLeft=0;
         counterRight++;
@@ -102,7 +102,7 @@ public class Agent extends Actor
     
     private void moveDown(int x, int y){  
         setLocation(x, y +SPEED);
-        direction = down;
+        direction = DOWN;
         counterUp=0;
         counterDown++;
         if(counterDown < ((skinAgentStairs.size())*3)){
@@ -115,7 +115,7 @@ public class Agent extends Actor
     
     private void moveUp(int x, int y){
         setLocation(x, y - SPEED);
-        direction = up;
+        direction = UP;
         counterUp++;
         counterDown=0;
         if(counterUp < ((skinAgentStairs.size())*3)){
