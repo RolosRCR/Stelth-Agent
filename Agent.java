@@ -1,4 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 import java.util.*;
 
 public class Agent extends Actor
@@ -7,8 +7,13 @@ public class Agent extends Actor
     private int counterLeft;
     private int counterUp;
     private int counterDown;
-    private static final int speed = 2;
-    private int direction=1;
+    private static final int SPEED = 2;
+    private static final int right=1;
+    private static final int left=2;
+    private static final int up=4;
+    private static final int down=3;
+    private static final int noMovementUpDown=0;
+    private int direction;
     
     ArrayList<String> skinAgentRight = new ArrayList();
     ArrayList<String> skinAgentLeft = new ArrayList();
@@ -31,26 +36,24 @@ public class Agent extends Actor
     }    
     public void act() 
     {
-        //moveBody();
-        handleDirection();
-        
+        handleDirection();        
     }    
     public void handleDirection(){
         int x = getX();
         int y = getY();
     
-        if(isTouching(Platform.class) && direction != 3 && direction != 4){
+        if(isTouching(Platform.class) && direction != down && direction != up){
             if(Greenfoot.isKeyDown("right")){
                 moveRight(x, y);
             }   
             else if(Greenfoot.isKeyDown("left")){
                 moveLeft(x, y);
             }   
-            else if (direction != 0){
+            else if (direction != noMovementUpDown){
                 standing(x, y); 
             }
         }  
-        if(isTouching(Stairs.class)  && direction !=0){
+        if(isTouching(Stairs.class)  && direction != noMovementUpDown){
             if(Greenfoot.isKeyDown("down") && !isTouching(PlatformSteel.class)){                          
                 moveDown(x, y);
             }
@@ -59,23 +62,23 @@ public class Agent extends Actor
             }
             else if(direction==3 && isTouching(PlatformSteel.class)){
                 if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("left"))
-                    direction=0;
+                    direction=noMovementUpDown;
             }
         }
-        else if(!isTouching(Stairs.class) && direction ==4){
+        else if(!isTouching(Stairs.class) && direction == up){
             if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("left")){
                 setLocation(x, y + 6);
-                direction=0;
+                direction=noMovementUpDown;
             }
         }
     }
     
     private void moveLeft(int x, int y){
-        direction=2;
-        setLocation(x-speed, y);
+        direction=left;
+        setLocation(x-SPEED, y);
         counterLeft++;
         counterRight=0;
-        if(counterLeft < (skinAgentLeft.size()-1)*3){
+        if(counterLeft < (skinAgentLeft.size())*3){
             if(counterLeft % 3 == 0)
                 setImage(skinAgentLeft.get(counterLeft/3));
         }
@@ -84,11 +87,11 @@ public class Agent extends Actor
     }
     
     private void moveRight(int x, int y){
-        direction=1;
-        setLocation(x+speed, y);
+        direction=right;
+        setLocation(x+SPEED, y);
         counterLeft=0;
         counterRight++;
-        if(counterRight < (skinAgentRight.size()-1)*3){
+        if(counterRight < (skinAgentRight.size())*3){
             if(counterRight % 3 == 0)
                 setImage(skinAgentRight.get(counterRight/3));
         }
@@ -97,8 +100,8 @@ public class Agent extends Actor
     }
     
     private void moveDown(int x, int y){  
-        setLocation(x, y +speed);
-        direction = 3;
+        setLocation(x, y +SPEED);
+        direction = down;
         counterUp=0;
         counterDown++;
         if(counterDown < ((skinAgentStairs.size())*3)){
@@ -110,8 +113,8 @@ public class Agent extends Actor
     } 
     
     private void moveUp(int x, int y){
-        setLocation(x, y - speed);
-        direction = 4;
+        setLocation(x, y - SPEED);
+        direction = up;
         counterUp++;
         counterDown=0;
         if(counterUp < ((skinAgentStairs.size())*3)){
