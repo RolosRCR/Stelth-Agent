@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Agent
+comment1.params=
+comment1.target=Agent()
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ handleDirection()
+comment4.params=x\ y
+comment4.target=void\ moveLeft(int,\ int)
+comment5.params=x\ y
+comment5.target=void\ moveRight(int,\ int)
+comment6.params=x\ y
+comment6.target=void\ moveDown(int,\ int)
+comment7.params=x\ y
+comment7.target=void\ moveUp(int,\ int)
+comment8.params=x\ y
+comment8.target=void\ standing(int,\ int)
+comment9.params=skins
+comment9.target=void\ buildSkins(java.util.List)
+numComments=10

@@ -17,13 +17,11 @@ public class PlayButton extends Button
         super(observers);
     }
 
-    public void act() 
+    public void act()
     {
         super.act();
-        if (Greenfoot.mouseClicked(this))
-        {
-            Greenfoot.setWorld(new MenuScreen());   
+        if(Greenfoot.mouseClicked(this)){
+            Greenfoot.setWorld(new Nivel1());
         }
     }
-}    
-
+}
