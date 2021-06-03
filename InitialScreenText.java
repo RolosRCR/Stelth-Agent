@@ -14,6 +14,6 @@ public class InitialScreenText extends Actor
      */
     public void act() 
     {
-        // Add your action code here.
+        System.out.println("Algo");
     }    
 }
