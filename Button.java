@@ -9,7 +9,7 @@ import java.util.*;
  */
 public abstract class Button extends Actor
 {       
-    private List<Observer> observers = new LinkedList();
+    private List<Observer> observers = new LinkedList<>();
 
     public void addObserver(Observer observer)
     {
@@ -20,10 +20,7 @@ public abstract class Button extends Actor
 
     protected Button (Observer ... observers)
     {
-        for(Observer observer: observers)
-        {
-            this.observers.add(observer);
-        }
+        Collections.addAll(this.observers, observers);
     }
 
     public void act() 
