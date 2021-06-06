@@ -20,6 +20,7 @@ class.Weapon.image=gunType3.png
 dependency1.from=ScoreScreen
 dependency1.to=BackButton
 dependency1.type=UsesDependency
+<<<<<<< HEAD
 dependency10.from=Nivel1
 dependency10.to=Stairs
 dependency10.type=UsesDependency
@@ -67,21 +68,28 @@ dependency23.to=ScoreScreen
 dependency23.type=UsesDependency
 dependency3.from=InitialScreen
 dependency3.to=MenuScreen
+=======
+dependency2.from=InitialScreen
+dependency2.to=InitialScreenText
+dependency2.type=UsesDependency
+dependency3.from=MenuScreen
+dependency3.to=HelpButton
+>>>>>>> 4fb48c521b0de77bdfa045c64a164ea451614fb7
 dependency3.type=UsesDependency
-dependency4.from=HelpScreen
-dependency4.to=BackButton
+dependency4.from=MenuScreen
+dependency4.to=ScoreButton
 dependency4.type=UsesDependency
-dependency5.from=MenuScreen
-dependency5.to=PlayButton
+dependency5.from=HelpScreen
+dependency5.to=MenuScreen
 dependency5.type=UsesDependency
-dependency6.from=MenuScreen
-dependency6.to=HelpButton
+dependency6.from=HelpButton
+dependency6.to=HelpScreen
 dependency6.type=UsesDependency
-dependency7.from=MenuScreen
-dependency7.to=ScoreButton
+dependency7.from=BackButton
+dependency7.to=MenuScreen
 dependency7.type=UsesDependency
-dependency8.from=Nivel1
-dependency8.to=Agent
+dependency8.from=ScoreButton
+dependency8.to=ScoreScreen
 dependency8.type=UsesDependency
 dependency9.from=Nivel1
 dependency9.to=PlatformStone
@@ -91,8 +99,14 @@ editor.fx.0.width=1550
 editor.fx.0.x=-7
 editor.fx.0.y=-7
 height=838
+<<<<<<< HEAD
 package.numDependencies=23
 package.numTargets=21
+=======
+package.numDependencies=18
+package.numTargets=16
+main
+>>>>>>> 4fb48c521b0de77bdfa045c64a164ea451614fb7
 project.charset=UTF-8
 publish.hasSource=false
 publish.locked=true
@@ -115,6 +129,7 @@ target1.width=80
 target1.x=0
 target1.y=0
 target10.height=50
+<<<<<<< HEAD
 target10.name=PlatformStone
 target10.showInterface=false
 target10.type=ClassTarget
@@ -184,6 +199,14 @@ target19.type=ClassTarget
 target19.width=90
 target19.x=0
 target19.y=0
+=======
+target10.name=ScoreButton
+target10.showInterface=false
+target10.type=ClassTarget
+target10.width=90
+target10.x=0
+target10.y=0
+>>>>>>> 4fb48c521b0de77bdfa045c64a164ea451614fb7
 target2.height=50
 target2.name=HelpScreen
 target2.showInterface=false
@@ -213,14 +236,22 @@ target3.width=80
 target3.x=0
 target3.y=0
 target4.height=50
+<<<<<<< HEAD
 target4.name=MenuScreen
+=======
+target4.name=Button
+>>>>>>> 4fb48c521b0de77bdfa045c64a164ea451614fb7
 target4.showInterface=false
-target4.type=ClassTarget
-target4.width=90
+target4.type=AbstractTarget
+target4.width=80
 target4.x=0
 target4.y=0
 target5.height=50
+<<<<<<< HEAD
 target5.name=MachineGun
+=======
+target5.name=Button
+>>>>>>> 4fb48c521b0de77bdfa045c64a164ea451614fb7
 target5.showInterface=false
 target5.type=ClassTarget
 target5.width=100
@@ -234,6 +265,7 @@ target6.width=90
 target6.x=0
 target6.y=0
 target7.height=50
+<<<<<<< HEAD
 target7.name=Button
 target7.showInterface=false
 target7.type=AbstractTarget
@@ -249,6 +281,23 @@ target8.x=0
 target8.y=0
 target9.height=50
 target9.name=Stairs
+=======
+target7.name=InitialScreenText
+target7.showInterface=false
+target7.type=ClassTarget
+target7.width=110
+target7.x=0
+target7.y=0
+target8.height=50
+target8.name=BackButton
+target8.showInterface=false
+target8.type=ClassTarget
+target8.width=110
+target8.x=0
+target8.y=0
+target9.height=50
+target9.name=PlayButton
+>>>>>>> 4fb48c521b0de77bdfa045c64a164ea451614fb7
 target9.showInterface=false
 target9.type=ClassTarget
 target9.width=80

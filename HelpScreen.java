@@ -20,9 +20,4 @@ public class HelpScreen extends World
         super(600, 400, 1); 
         addObject(new BackButton(),21,13);
     }
-
-    public void act()
-    {
-
-    }
 }
