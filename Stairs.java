@@ -1,21 +1,22 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class PlayBotton here.
+ * Write a description of class Escalera here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class PlayButton extends Button
+public class Stairs extends Actor
 {
+    public Stairs(){
+        setImage("images/Escalera3.png");   
+    }
     /**
-     * Act - do whatever the PlayBotton wants to do. This method is called whenever
+     * Act - do whatever the Escalera wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        if(Greenfoot.mouseClicked(this)){
-            Greenfoot.setWorld(new Nivel1());
-        }
+        
     }    
 }
