@@ -13,6 +13,8 @@ public class Nivel1 extends World
     private int sizePlatformHigh;
     private int sizePlatformWidth;
     private int highStairs;
+    private Agent personaje = new Agent();
+
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -21,8 +23,7 @@ public class Nivel1 extends World
     {    
         super(600, 400, 1); 
         buildMap();
-        addObject(new Agent(), 250, 380);
-        
+        addObject(personaje, 250, 380);
     }
     
     public void buildMap(){
@@ -47,5 +48,8 @@ public class Nivel1 extends World
             y=400;
             x=x+sizePlatformWidth;
         }
-    }    
+    }
+    public int getAgentPosition(){
+        return personaje.getPositionX();
+    }
 }

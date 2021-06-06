@@ -14,6 +14,6 @@ public class InitialScreenText extends Actor
      */
     public void act() 
     {
-        System.out.println("Algo");
+        //System.out.println("Algo");
     }    
 }
