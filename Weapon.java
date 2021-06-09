@@ -6,10 +6,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public abstract class Weapon extends Actor
+public class Weapon extends Actor
 {
-    public abstract int getPositionX();    
-    public abstract int getPositionY();   
-    public abstract void Collision();
+    public int getPositionX(){
+        return getX(); 
+    }
+    
+    public int getPositionY(){
+        return getY();
+    }
+    
+    public void collision(){
+        if(getX() > 590 || getX() < 10){
+            getWorld().removeObject(this);
+        }    
+    } 
     
 }

@@ -48,8 +48,8 @@ public class Agent extends Actor
             else if(Greenfoot.isKeyDown("left")){
                 moveLeft(x, y);
             }
-            else if(Greenfoot.isKeyDown("z") && counterGun % Cadence(typeWeapon) == 0){
-                getWorld().addObject(TypeWeapon.buildWeapon(typeWeapon, direction), getX(), getY());
+            else if(Greenfoot.isKeyDown("z") && counterGun % cadence(typeWeapon) == 0){
+                getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, direction), getX(), getY());
             }  
             else if(Greenfoot.isKeyDown("space")){
                 jumping=true;
@@ -231,7 +231,7 @@ public class Agent extends Actor
         return direction;
     }
     
-    public int Cadence(String typeWeapon){
+    public int cadence(String typeWeapon){
         switch(typeWeapon){
            case "Gun":
                return 15;

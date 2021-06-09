@@ -6,5 +6,5 @@ comment1.target=int\ getPositionX()
 comment2.params=
 comment2.target=int\ getPositionY()
 comment3.params=
-comment3.target=void\ Collision()
+comment3.target=void\ collision()
 numComments=4

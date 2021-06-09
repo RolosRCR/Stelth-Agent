@@ -24,8 +24,6 @@ public class Nivel1 extends World
         super(600, 400, 1); 
         buildMap();
         addObject(personaje, 250, 380);
-        addObject(new EnemieTypeOne(), 250, 380);
-        addObject(new EnemieTypeTwo(), 250, 380);
     }
     
     public void buildMap(){

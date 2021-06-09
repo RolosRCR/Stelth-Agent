@@ -25,20 +25,7 @@ public class MachineGun extends Weapon
             if(x < 0)
                 getWorld().removeObjects(getWorld().getObjects(MachineGun.class)); 
         }
-        Collision();
+        collision();
     }   
     
-    public int getPositionX(){
-        return getX(); 
-    }
-    
-    public int getPositionY(){
-        return getY();
-    }
-    
-    public void Collision(){
-        if(getX() > 590 || getX() < 10){
-            getWorld().removeObject(this);
-        }    
-    } 
 }

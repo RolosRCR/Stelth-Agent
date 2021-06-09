@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class TypeWeapon extends Actor
+public class TypeWeaponFactory extends Actor
 {
     
     public static Weapon buildWeapon(String type, int direction){
