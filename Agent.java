@@ -72,6 +72,7 @@ public class Agent extends Actor
                 direction=NOMOVEMENT;
             }
         }
+        
     }
     
     private void moveLeft(int x, int y){
