@@ -7,54 +7,69 @@ public class Agent extends Actor
     private int counterLeft;
     private int counterUp;
     private int counterDown;
+    private int counterGun=0;
     private static final int SPEED = 2;
+    private static final int JUMPSPEED = 3;
+    private static final int FALLSPEED = 5;
+    private static final int HIGHJUMP=40;
     private static final int RIGHT=1;
     private static final int LEFT=2;
     private static final int UP=4;
     private static final int DOWN=3;
     private static final int NOMOVEMENT=0;
     private int direction;
-    
+    private boolean jumping;
+    private boolean startJumping;
+    private int highAgent;
+    private String typeWeapon="MachineGun";
+
     private ArrayList<String> skinAgentRight = new ArrayList();
     private ArrayList<String> skinAgentLeft = new ArrayList();
     private ArrayList<String> skinAgentJump = new ArrayList();
     private ArrayList<String> skinAgentStairs = new ArrayList();
     private ArrayList<String> skinAgentStanding = new ArrayList();
-    
+
     public Agent(){
-        skinAgentRight.add("Right");
-        skinAgentLeft.add("Left");
-        skinAgentJump.add("Jump");
-        skinAgentStairs.add("Stairs");
-        skinAgentStanding.add("Standing");
-        
-        buildSkins(skinAgentRight);
-        buildSkins(skinAgentLeft);
-        buildSkins(skinAgentJump);
-        buildSkins(skinAgentStairs);
-        buildSkins(skinAgentStanding);
+
+        buildSkins();
         setImage("images/Personaje principal_derecha_A.png");   
     }    
+
     public void act() 
     {
-        handleDirection();        
+        handleDirection();
     }    
+
     public void handleDirection(){
         int x = getX();
         int y = getY();
-    
-        if(isTouching(Platform.class) && direction != DOWN && direction != UP){
+        counterGun++;
+        if(!isTouching(Platform.class) && !isTouching(Stairs.class) &&!jumping){
+            fall(x, y);
+        }
+        else if(isTouching(Platform.class) && direction != DOWN && direction != UP && !jumping){
             if(Greenfoot.isKeyDown("right")){
                 moveRight(x, y);
             }   
             else if(Greenfoot.isKeyDown("left")){
                 moveLeft(x, y);
-            }   
+            }
+            else if(Greenfoot.isKeyDown("z") && counterGun % cadence(typeWeapon) == 0){
+                getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, direction), getX(), getY());
+            }  
+            else if(Greenfoot.isKeyDown("space")){
+                jumping=true;
+                startJumping = true;
+                highAgent=getY();
+            }
             else if (direction != NOMOVEMENT){
                 standing(x, y); 
             }
-        }  
-        if(isTouching(Stairs.class)  && direction != NOMOVEMENT){
+        }
+        else if(jumping){
+            jump(x, y);
+        }
+        if(isTouching(Stairs.class)  && direction != NOMOVEMENT && !jumping){
             if(Greenfoot.isKeyDown("down") && !isTouching(PlatformSteel.class)){                          
                 moveDown(x, y);
             }
@@ -72,95 +87,178 @@ public class Agent extends Actor
                 direction=NOMOVEMENT;
             }
         }
-        
+
     }
-    
+
+    private void fall(int x, int y){
+        setLocation(x, y+FALLSPEED);
+        if(isTouching(Platform.class)){
+            setLocation(x, y-FALLSPEED);
+            while(!isTouching(Platform.class)){
+                setLocation(x, y++);
+            }
+        }
+    }
+
     private void moveLeft(int x, int y){
         direction=LEFT;
         setLocation(x-SPEED, y);
         counterLeft++;
         counterRight=0;
-        if(counterLeft < (skinAgentLeft.size())*3){
+        if(counterLeft < (skinAgentLeft.size())*3+3){
             if(counterLeft % 3 == 0)
-                setImage(skinAgentLeft.get(counterLeft/3));
+                setImage(skinAgentLeft.get(counterLeft/3-1));
         }
         else
             counterLeft=0;
     }
-    
+
     private void moveRight(int x, int y){
         direction=RIGHT;
         setLocation(x+SPEED, y);
         counterLeft=0;
         counterRight++;
-        if(counterRight < (skinAgentRight.size())*3){
+        if(counterRight < (skinAgentRight.size())*3+3){
             if(counterRight % 3 == 0)
-                setImage(skinAgentRight.get(counterRight/3));
+                setImage(skinAgentRight.get(counterRight/3-1));
         }
         else
             counterRight=0;
     }
-    
+
     private void moveDown(int x, int y){  
         setLocation(x, y +SPEED);
         direction = DOWN;
         counterUp=0;
         counterDown++;
-        if(counterDown < ((skinAgentStairs.size())*3)){
+        counterGun=0;
+        if(counterDown < ((skinAgentStairs.size())*3+3)){
             if(counterDown % 3 == 0)
-                setImage(skinAgentStairs.get(counterDown/3));
+                setImage(skinAgentStairs.get(counterDown/3-1));
         }
         else
             counterDown=0;
     } 
-    
+
     private void moveUp(int x, int y){
         setLocation(x, y - SPEED);
         direction = UP;
         counterUp++;
         counterDown=0;
-        if(counterUp < ((skinAgentStairs.size())*3)){
+        counterGun=0;
+        if(counterUp < ((skinAgentStairs.size())*3+3)){
             if(counterUp % 3 == 0)
-                setImage(skinAgentStairs.get(counterUp/3));
+                setImage(skinAgentStairs.get(counterUp/3-1));
         }
         else
             counterUp=0;
     }
-    
+
     private void standing(int x, int y){
-        setImage(skinAgentStanding.get(direction));
+        setImage(skinAgentStanding.get(direction-1));
     }
-    
-    public void buildSkins(List skins){
-        if(skins.get(0) == "Right"){
-            skins.add("images/Personaje principal_derecha_B.png");
-            skins.add("images/Personaje principal_derecha_C.png");
-            skins.add("images/Personaje principal_derecha_D.png");
-            skins.add("images/Personaje principal_derecha_E.png");
-            skins.add("images/Personaje principal_derecha_F.png");
-            skins.add("images/Personaje principal_derecha_G.png");
+
+    private void buildSkins(){
+        int movementTypes=5;
+
+        for(int i=0; i<=5; i++){
+            if(i == RIGHT){
+                skinAgentRight.add("images/Personaje principal_derecha_B.png");
+                skinAgentRight.add("images/Personaje principal_derecha_C.png");
+                skinAgentRight.add("images/Personaje principal_derecha_D.png");
+                skinAgentRight.add("images/Personaje principal_derecha_E.png");
+                skinAgentRight.add("images/Personaje principal_derecha_F.png");
+                skinAgentRight.add("images/Personaje principal_derecha_G.png");
+            }
+            else if(i == LEFT){
+                skinAgentLeft.add("images/Personaje principal_izquierda_B.png");
+                skinAgentLeft.add("images/Personaje principal_izquierda_C.png");
+                skinAgentLeft.add("images/Personaje principal_izquierda_D.png");
+                skinAgentLeft.add("images/Personaje principal_izquierda_E.png");
+                skinAgentLeft.add("images/Personaje principal_izquierda_F.png");
+                skinAgentLeft.add("images/Personaje principal_izquierda_G.png");
+            }
+            else if(i == UP){
+                skinAgentJump.add("images/Personaje principal-Salto_derecha_B.png");        
+                skinAgentJump.add("images/Personaje principal-Salto_izquierda_B.png");
+            }
+            else if(i == DOWN){
+                skinAgentStairs.add("images/Personaje principal_Arriba-Abajo-A.png");
+                skinAgentStairs.add("images/Personaje principal_Arriba-Abajo-B.png");
+            }
+            else if(i == NOMOVEMENT){
+                skinAgentStanding.add("images/Personaje principal_derecha_A.png");
+                skinAgentStanding.add("images/Personaje principal_izquierda_A.png");
+                skinAgentStanding.add("images/Personaje principal_Arriba-Abajo-A.png");
+                skinAgentStanding.add("images/Personaje principal_Arriba-Abajo-B.png");        
+            }
         }
-        else if(skins.get(0) == "Left"){
-            skins.add("images/Personaje principal_izquierda_B.png");
-            skins.add("images/Personaje principal_izquierda_C.png");
-            skins.add("images/Personaje principal_izquierda_D.png");
-            skins.add("images/Personaje principal_izquierda_E.png");
-            skins.add("images/Personaje principal_izquierda_F.png");
-            skins.add("images/Personaje principal_izquierda_G.png");
+    }
+
+    private void jump(int x, int y){
+        if (direction == RIGHT){ 
+            setImage(skinAgentJump.get(direction-1));
+            if(startJumping == true){
+                setLocation(x + SPEED, y - JUMPSPEED);
+                if(y>highAgent-HIGHJUMP){
+                    x=x+SPEED;
+                    y=y-JUMPSPEED;
+                }
+                else
+                    startJumping=false;
+            }
+            else if(startJumping==false){
+                setLocation(x + SPEED, y + JUMPSPEED);
+                x=x+SPEED;
+                y=y+JUMPSPEED;
+                if(y==highAgent)
+                    jumping=false;
+            }
         }
-        else if(skins.get(0) == "Jump"){
-            skins.add("images/Personaje principal-Salto_derecha_B.png");        
-            skins.add("images/Personaje principal-Salto_izquierda_B.png");
-        }
-        else if(skins.get(0) == "Stairs"){
-            skins.add("images/Personaje principal_Arriba-Abajo-A.png");
-            skins.add("images/Personaje principal_Arriba-Abajo-B.png");
-        }
-        else if(skins.get(0) == "Standing"){
-            skins.add("images/Personaje principal_derecha_A.png");
-            skins.add("images/Personaje principal_izquierda_A.png");
-            skins.add("images/Personaje principal_Arriba-Abajo-A.png");
-            skins.add("images/Personaje principal_Arriba-Abajo-B.png");        
+        else if(direction == LEFT){
+            setImage(skinAgentJump.get(direction-1));
+            if(startJumping== true){
+                setLocation(x - SPEED, y - JUMPSPEED);
+                if(y>highAgent-HIGHJUMP){
+                    x=x-SPEED;
+                    y=y-JUMPSPEED;
+                }
+                else{
+                    startJumping=false;
+                }
+            }
+            else if(startJumping==false){
+                setLocation(x - SPEED, y + JUMPSPEED);
+                x=x-SPEED;
+                y=y+JUMPSPEED;  
+                if(y==highAgent)
+                    jumping=false;
+            } 
+        }        
+    }
+
+    public int getPositionX(){
+        return getX();   
+    }
+
+    public int getPositionY(){
+        return getY();
+    }
+
+    public int getDirection(){
+        return direction;
+    }
+
+    public int cadence(String typeWeapon){
+        switch(typeWeapon){
+            case "Gun":
+            return 15;
+            case "SemiAutomatic":
+            return 10;
+            case "MachineGun":
+            return 5;
+            default:
+            return 100;
         }
     }
 }

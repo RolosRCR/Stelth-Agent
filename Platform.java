@@ -8,6 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Platform extends Actor
 {
+    private static int platformWidth=21;
+    private static int platformHigh=10;
     public Platform(){
     }
     /**
@@ -18,4 +20,10 @@ public class Platform extends Actor
     {
         // Add your action code here.
     }    
+    public static int getWidth(){
+    return platformWidth;
+    }
+    public static int getHigh(){
+    return platformHigh;
+    }
 }

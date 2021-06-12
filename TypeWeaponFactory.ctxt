@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=TypeWeaponFactory
+comment0.text=\n\ Write\ a\ description\ of\ class\ TypeWeapon\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=type\ direction
+comment1.target=Weapon\ buildWeapon(java.lang.String,\ int)
+numComments=2
