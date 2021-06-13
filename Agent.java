@@ -48,7 +48,12 @@ public class Agent extends Actor
             fall(x, y);
         }
         else if(isTouching(Platform.class) && direction != DOWN && direction != UP && !jumping){
-            if(Greenfoot.isKeyDown("right")){
+            if(Greenfoot.isKeyDown("space")){
+                jumping=true;
+                startJumping = true;
+                highAgent=getY();
+            }
+            else if(Greenfoot.isKeyDown("right")){
                 moveRight(x, y);
             }   
             else if(Greenfoot.isKeyDown("left")){
@@ -57,11 +62,6 @@ public class Agent extends Actor
             else if(Greenfoot.isKeyDown("z") && counterGun % cadence(typeWeapon) == 0){
                 getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, direction), getX(), getY());
             }  
-            else if(Greenfoot.isKeyDown("space")){
-                jumping=true;
-                startJumping = true;
-                highAgent=getY();
-            }
             else if (direction != NOMOVEMENT){
                 standing(x, y); 
             }
@@ -211,8 +211,13 @@ public class Agent extends Actor
                 setLocation(x + SPEED, y + JUMPSPEED);
                 x=x+SPEED;
                 y=y+JUMPSPEED;
-                if(y==highAgent)
+                if(isTouching(Platform.class)){
                     jumping=false;
+                    setLocation(x, y-FALLSPEED);
+                    while(!isTouching(Platform.class)){
+                        setLocation(x, y++);
+                    }
+                }
             }
         }
         else if(direction == LEFT){

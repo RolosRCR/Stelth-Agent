@@ -8,7 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Nivel2 extends World
 {
-
+    int screenWidth=600;
+    int screenHigh=400;
     /**
      * Constructor for objects of class Nivel2.
      * 
@@ -20,11 +21,19 @@ public class Nivel2 extends World
         buildMap();
         addObject(new Agent(), 20, 20);
     }
-    public void buildMap(){
-        int screenWidth=600;
-        int screenHigh=400;
-        for(int x=0;x<screenWidth;x+=Platform.getWidth()){
-          addObject(new PlatformSteel(), x,screenWidth-Platform.getHigh()); 
+
+    private void buildMap()
+    {
+        buildPlatforms();
+    }
+
+    private void buildPlatforms(){
+        for(int x=0;x<(screenWidth/Platform.getWidth())+1;x++){
+            addObject(new PlatformSteel(), x*Platform.getWidth(),screenWidth-Platform.getHigh());
+            addObject(new PlatformSteel(), x*Platform.getWidth(),150);
+            addObject(new PlatformSteel(), x*Platform.getWidth(),275);
+            if(x<6)
+                addObject(new PlatformSteel(), x*Platform.getWidth(),60);
         }
     }
 }

@@ -25,7 +25,7 @@ public class Nivel1 extends World
         buildMap();
         addObject(personaje, 250, 380);
     }
-    
+
     public void buildMap(){
         int x=0;
         int y=400;
@@ -36,19 +36,20 @@ public class Nivel1 extends World
         highStairs=350;
         for(int i=0; i<limitPlatformWidth; i++){
             for(int j=0; j<limitPlatformHigh; j++){
-                 if(i% 5 ==0 && y != 400){
-                     this.addObject(new PlatformStone(), x, y);
-                     this.addObject(new Stairs(), x, highStairs);
-                 }
-                 else{
-                     this.addObject(new PlatformSteel(), x, y); 
-                 }
-                 y=y-sizePlatformHigh;
+                if(i% 5 ==0 && y != 400){
+                    this.addObject(new PlatformStone(), x, y);
+                    this.addObject(new Stairs(3), x, highStairs);
+                }
+                else{
+                    this.addObject(new PlatformSteel(), x, y); 
+                }
+                y=y-sizePlatformHigh;
             }
             y=400;
             x=x+sizePlatformWidth;
         }
     }
+
     public int getAgentPosition(){
         return personaje.getPositionX();
     }
