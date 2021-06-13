@@ -7,7 +7,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class MenuScreen extends World implements Observer{
-    private GreenfootSound backgroundMusic = new GreenfootSound("InitialScreenMusic.MP3");
+    private GreenfootSound backgroundMusic = null;
     /**
      * Constructor for objects of class MenuScreen.
      * 
@@ -16,6 +16,7 @@ public class MenuScreen extends World implements Observer{
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
+        
         showMenu();
     }
 
@@ -33,8 +34,10 @@ public class MenuScreen extends World implements Observer{
     public void act()
     {
         super.act();
-        if(!backgroundMusic.isPlaying())
+        if(backgroundMusic==null || !backgroundMusic.isPlaying())
         {
+            backgroundMusic = new GreenfootSound("InitialScreenMusic.MP3");
+            backgroundMusic.setVolume(10);
             backgroundMusic.play();
         }
     }
