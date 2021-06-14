@@ -19,21 +19,79 @@ public class Nivel2 extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         buildMap();
-        addObject(new Agent(), 20, 20);
+        addObject(new Agent(), 10, 20);
     }
 
     private void buildMap()
     {
-        buildPlatforms();
+        buildPlatformsSteel();
+        buildPlatformsStone();
+        buildStairs();
+        buildBoxes();
+        buildPlatformBoxes();
+        buildGoal();
+        buildCollectibles();
     }
 
-    private void buildPlatforms(){
+    private void buildPlatformsSteel(){
         for(int x=0;x<(screenWidth/Platform.getWidth())+1;x++){
-            addObject(new PlatformSteel(), x*Platform.getWidth(),screenWidth-Platform.getHigh());
-            addObject(new PlatformSteel(), x*Platform.getWidth(),150);
-            addObject(new PlatformSteel(), x*Platform.getWidth(),275);
-            if(x<6)
-                addObject(new PlatformSteel(), x*Platform.getWidth(),60);
+            if(x!= 19)
+                addObject(new PlatformSteel(), x*Platform.getWidth(),150);
+            if(x!= 4&&x!= 5)
+                addObject(new PlatformSteel(), x*Platform.getWidth(),270);
+            addObject(new PlatformSteel(), x*Platform.getWidth(),590);
+            if(x<5)
+                addObject(new PlatformSteel(),x*Platform.getWidth(),60);
         }
+           addObject(new PlatformSteel(),560,110);
+    }
+
+    private void buildPlatformsStone(){
+        addObject(new PlatformStone(), 400,150);
+    }
+
+    private void buildStairs(){
+       addObject(new Stairs(3), 560,55);
+       addObject(new Stairs(3), 400,180);
+        addObject(new Stairs(3), 400,220);
+        
+    }
+
+    private void buildBoxes(){
+        addObject(new Box(), 240, 125);
+        addObject(new Box(), 330, 90);
+        
+        addObject(new Box(), 430, 125);
+        addObject(new Box(), 430, 125-Box.getHigh());
+        addObject(new Box(), 430+Box.getWidth(), 125);
+        addObject(new Box(), 560, 125);
+        addObject(new Box(), 250, 245);
+        addObject(new Box(), 95, 375);
+    }
+
+    private void buildPlatformBoxes(){
+        addObject(new PlatformBox(),239,105);
+        addObject(new PlatformBox(),329,70);
+
+        addObject(new PlatformBox(), 430, 105-Box.getHigh());
+        addObject(new PlatformBox(), 430+Box.getWidth(), 105);
+        addObject(new PlatformBox(), 560, 105);
+        addObject(new PlatformBox(), 250, 225);
+        addObject(new PlatformBox(), 95, 355);
+    }
+
+    private void buildGoal(){
+            addObject(new PlatformNextLevel(), 560,400);
+            addObject(new Arrow(), 558,370);
+    }
+    private void buildCollectibles(){
+        addObject(new USBBonus(), 560,10);
+        addObject(new USBBonus(), 560,245);
+        addObject(new USBBonus(), 35,245);
+        addObject(new USBBonus(), 300,370);
+        addObject(new BulletsBoost(), 250,200);
     }
 }
+
+
+

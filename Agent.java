@@ -10,8 +10,9 @@ public class Agent extends Actor
     private int counterGun=0;
     private static final int SPEED = 2;
     private static final int JUMPSPEED = 3;
-    private static final int FALLSPEED = 5;
-    private static final int HIGHJUMP=40;
+    private static final int HIGHLIMIT = 0;
+    private static final int FALLSPEED = 3;
+    private static final int HIGHJUMP=50;
     private static final int RIGHT=1;
     private static final int LEFT=2;
     private static final int UP=4;
@@ -19,7 +20,7 @@ public class Agent extends Actor
     private static final int NOMOVEMENT=0;
     private int direction;
     private boolean jumping;
-    private boolean startJumping;
+    private boolean isJumping;
     private int highAgent;
     private String typeWeapon="MachineGun";
 
@@ -50,7 +51,7 @@ public class Agent extends Actor
         else if(isTouching(Platform.class) && direction != DOWN && direction != UP && !jumping){
             if(Greenfoot.isKeyDown("space")){
                 jumping=true;
-                startJumping = true;
+                isJumping = true;
                 highAgent=getY();
             }
             else if(Greenfoot.isKeyDown("right")){
@@ -69,6 +70,7 @@ public class Agent extends Actor
         else if(jumping){
             jump(x, y);
         }
+
         if(isTouching(Stairs.class)  && direction != NOMOVEMENT && !jumping){
             if(Greenfoot.isKeyDown("down") && !isTouching(PlatformSteel.class)){                          
                 moveDown(x, y);
@@ -92,17 +94,19 @@ public class Agent extends Actor
 
     private void fall(int x, int y){
         setLocation(x, y+FALLSPEED);
-        if(isTouching(Platform.class)){
+        /*if(isTouching(Platform.class)||isTouching(Box.class)){
             setLocation(x, y-FALLSPEED);
             while(!isTouching(Platform.class)){
                 setLocation(x, y++);
             }
-        }
+        }*/
     }
 
     private void moveLeft(int x, int y){
         direction=LEFT;
         setLocation(x-SPEED, y);
+        if(isTouching(Box.class))
+            setLocation(x+SPEED, y);
         counterLeft++;
         counterRight=0;
         if(counterLeft < (skinAgentLeft.size())*3+3){
@@ -116,6 +120,8 @@ public class Agent extends Actor
     private void moveRight(int x, int y){
         direction=RIGHT;
         setLocation(x+SPEED, y);
+        if(isTouching(Box.class))
+            setLocation(x-SPEED, y);
         counterLeft=0;
         counterRight++;
         if(counterRight < (skinAgentRight.size())*3+3){
@@ -195,66 +201,49 @@ public class Agent extends Actor
         }
     }
 
-    private void jump(int x, int y){
-        if (direction == RIGHT){ 
-            setImage(skinAgentJump.get(direction-1));
-            if(startJumping == true){
-                setLocation(x + SPEED, y - JUMPSPEED);
-                if(y>highAgent-HIGHJUMP){
-                    x=x+SPEED;
-                    y=y-JUMPSPEED;
-                }
-                else
-                    startJumping=false;
-            }
-            else if(startJumping==false){
-                setLocation(x + SPEED, y + JUMPSPEED);
-                x=x+SPEED;
-                y=y+JUMPSPEED;
-                if(isTouching(Platform.class)){
-                    jumping=false;
-                    setLocation(x, y-FALLSPEED);
-                    while(!isTouching(Platform.class)){
-                        setLocation(x, y++);
-                    }
-                }
-            }
+    private void jump(int x, int y){ 
+        int jumpDirection;
+
+        if (direction==RIGHT){
+            jumpDirection=1;
+            setImage(skinAgentJump.get(0));}
+        else {
+            jumpDirection=-1;
+        setImage(skinAgentJump.get(1));}
+
+        if(y>highAgent-HIGHJUMP && isJumping && y>HIGHLIMIT){
+            y=y-JUMPSPEED;
         }
-        else if(direction == LEFT){
-            setImage(skinAgentJump.get(direction-1));
-            if(startJumping== true){
-                setLocation(x - SPEED, y - JUMPSPEED);
-                if(y>highAgent-HIGHJUMP){
-                    x=x-SPEED;
-                    y=y-JUMPSPEED;
-                }
-                else{
-                    startJumping=false;
-                }
+        else{
+            isJumping=false;  
+        } 
+        if(!isTouching(Box.class))
+          x=x+(SPEED*jumpDirection);
+        setLocation(x , y);
+
+        if(!isJumping&&!isTouching(Platform.class)){
+            y=y+JUMPSPEED;
+            setLocation(x,y);
+            if(isTouching(Platform.class)){
+                jumping=false;
             }
-            else if(startJumping==false){
-                setLocation(x - SPEED, y + JUMPSPEED);
-                x=x-SPEED;
-                y=y+JUMPSPEED;  
-                if(y==highAgent)
-                    jumping=false;
-            } 
-        }        
+        } 
     }
 
-    public int getPositionX(){
-        return getX();   
-    }
 
-    public int getPositionY(){
-        return getY();
-    }
+        public int getPositionX(){
+            return getX();   
+        }
 
-    public int getDirection(){
-        return direction;
-    }
+        public int getPositionY(){
+            return getY();
+        }
 
-    public int cadence(String typeWeapon){
+        public int getDirection(){
+            return direction;
+        }
+
+        public int cadence(String typeWeapon){
         switch(typeWeapon){
             case "Gun":
             return 15;
