@@ -22,7 +22,8 @@ public class ScoreButton extends Button
         super.act();
         if (Greenfoot.mouseClicked(this))
         {
-            Greenfoot.setWorld(new ScoreScreen());   
+            Greenfoot.setWorld(new ScoreScreen());
+            
         }
     }    
 }

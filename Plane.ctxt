@@ -16,4 +16,6 @@ comment7.params=x\ y
 comment7.target=void\ standing(int,\ int)
 comment8.params=
 comment8.target=void\ setWeapon()
-numComments=9
+comment9.params=
+comment9.target=void\ life()
+numComments=10

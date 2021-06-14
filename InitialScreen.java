@@ -33,7 +33,8 @@ public class InitialScreen extends World
 
         if(Greenfoot.isKeyDown("space"))
         {
-            Greenfoot.setWorld(new MenuScreen());            
+            Greenfoot.setWorld(new MenuScreen());  
+            
         }
     }
 

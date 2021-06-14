@@ -1,7 +1,7 @@
 #BlueJ class context
-comment0.target=Nivel1
+comment0.target=Nivel2
 comment1.params=
-comment1.target=Nivel1()
+comment1.target=Nivel2()
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
@@ -10,6 +10,4 @@ comment4.params=
 comment4.target=void\ positionPlayer()
 comment5.params=
 comment5.target=int\ getLevel()
-comment6.params=
-comment6.target=void\ compareLives()
-numComments=7
+numComments=6

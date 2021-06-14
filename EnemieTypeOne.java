@@ -7,6 +7,7 @@ public class EnemieTypeOne extends Enemie
     private int counterLeft;
     private int counterGun=0;
     private int levelPower;
+    private int life=30;
     private double direction;
     private String typeWeapon;
     private int cadenceWeapon;
@@ -59,12 +60,12 @@ public class EnemieTypeOne extends Enemie
             if(getPositionXPlayer() > getX()){
                 standing(RIGHT);  
                 if(counterGun % cadenceWeapon ==0)
-                    getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, RIGHT, KEYWEAPON), x + 15, y);
+                    getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, RIGHT, KEYWEAPONENEMIE), x + 15, y);
             }
             else{
                 standing(LEFT); 
                 if(counterGun % cadenceWeapon ==0)
-                    getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, LEFT, KEYWEAPON), x - 15, y);
+                    getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, LEFT, KEYWEAPONENEMIE), x - 15, y);
             }
             
             if(getPositionYPlayer() > y){
@@ -80,6 +81,7 @@ public class EnemieTypeOne extends Enemie
                 }
             }
         }
+        life();
     }
     
     private void buildSkins(){
@@ -150,6 +152,21 @@ public class EnemieTypeOne extends Enemie
         else if(levelPower == 3){
             typeWeapon = "MachineGun"; 
             cadenceWeapon = 10;
+        }
+    }
+    
+    public void life(){
+        Actor collided = getOneIntersectingObject(Weapon.class);
+        if(collided != null){
+            if(keyWeaponPlayer == 1){
+                life -= hurtPlayer;
+                getWorld().removeObject(collided);
+            }
+        } 
+        if(life <= 0){
+            getWorld().removeObject(this);
+            Score.addScore(Enemie.getPoints());
+            Hud.subtractAmountEnemies();
         }
     }
 }

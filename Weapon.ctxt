@@ -5,6 +5,4 @@ comment1.params=
 comment1.target=int\ getPositionX()
 comment2.params=
 comment2.target=int\ getPositionY()
-comment3.params=keyWeapon
-comment3.target=void\ collision(int)
-numComments=4
+numComments=3

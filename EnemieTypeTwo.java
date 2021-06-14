@@ -7,7 +7,7 @@ public class EnemieTypeTwo extends Enemie
     private int counterLeft;
     private double direction;
     private static final int SPEED = 4;
-    
+    private int life = 70;
     private ArrayList<String> skinMotorcyclistRight = new ArrayList();
     private ArrayList<String> skinMotorcyclistLeft = new ArrayList();
     
@@ -42,6 +42,7 @@ public class EnemieTypeTwo extends Enemie
                 }
             }
         }
+        life();
     }
     
     private void buildSkins(){
@@ -93,5 +94,20 @@ public class EnemieTypeTwo extends Enemie
         }
         else
             counterRight=0;
+    }
+    
+    public void life(){
+        Actor collided = getOneIntersectingObject(Weapon.class);
+        if(collided != null){
+            if(keyWeaponPlayer == 1){
+                life -= hurtPlayer;
+                getWorld().removeObject(collided);
+            }
+        } 
+        if(life <= 0){
+            getWorld().removeObject(this);
+            Score.addScore(Enemie.getPoints());
+            Hud.subtractAmountEnemies();
+        }
     }
 }

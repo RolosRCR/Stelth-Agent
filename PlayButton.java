@@ -21,6 +21,8 @@ public class PlayButton extends Button
     {
         super.act();
         if(Greenfoot.mouseClicked(this)){
+            Hud.initializeHud();
+            Score.setHudScore();
             Greenfoot.setWorld(new Nivel1());
         }
     }

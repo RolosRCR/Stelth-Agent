@@ -1,27 +1,27 @@
 import greenfoot.*;
 
-public class Nivel1 extends World
+public class Nivel2 extends World
 {
     private int limitPlatformWidth;
     private int limitPlatformHigh;
     private int sizePlatformHigh;
     private int sizePlatformWidth;
     private static final int LEVELPOWER=1;
-    private int amountEnemies=4;
+    private int amountEnemies=3;
     private int highStairs;
     private int highAgent;
     private int directionAgent; 
-    private static final int LEVEL=1;
+    private static final int LEVEL=2;
     private Agent player = new Agent();
 
-    public Nivel1()
+    public Nivel2()
     {    
         super(600, 400, 1); 
         buildMap();
         addObject(new Life(), 205, 90);
         addObject(new Score(), 205, 50);
         addObject(player, 50, 380);
-        addObject(new EnemieTypeOne(LEVELPOWER), 250, 292);
+        //addObject(new EnemieTypeOne(LEVELPOWER), 250, 292);
         addObject(new EnemieTypeOne(LEVELPOWER), 250, 382);
         addObject(new EnemieTypeTwo(), 250, 380);
         addObject(new EnemieTypeThree(LEVELPOWER), 250, 290);
@@ -33,13 +33,8 @@ public class Nivel1 extends World
     public void act(){
         positionPlayer();
         if(Hud.getAmountEnemies() == 0){
-            Score.score();
             Hud.updateScore();   
-            Greenfoot.setWorld(new Nivel2());
-        }
-        else if(Hud.getLives() <= 0){           
-            Greenfoot.setWorld(new MenuScreen());
-            ScoreScreen.addScore("Jorge: ", Hud.getTotalScore()); 
+            
         }
     }
     
@@ -74,11 +69,4 @@ public class Nivel1 extends World
     public int getLevel(){
         return LEVEL;
     }  
-    
-    public static void compareLives(){
-        if(Hud.getLives() <= 0){           
-            Greenfoot.setWorld(new MenuScreen());
-            ScoreScreen.addScore("Jorge: ", Hud.getTotalScore()); 
-        }
-    }
 }
