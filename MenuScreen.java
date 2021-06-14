@@ -16,7 +16,6 @@ public class MenuScreen extends World implements Observer{
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
-        
         showMenu();
     }
 
@@ -36,7 +35,7 @@ public class MenuScreen extends World implements Observer{
         super.act();
         if(backgroundMusic==null || !backgroundMusic.isPlaying())
         {
-            backgroundMusic = new GreenfootSound("InitialScreenMusic.MP3");
+            backgroundMusic = new GreenfootSound("menu.mp3");
             backgroundMusic.setVolume(10);
             backgroundMusic.play();
         }

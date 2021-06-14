@@ -26,11 +26,30 @@ public class Bomb extends Weapon
             if(counterDown % TIMESKIN == 0)
                 setImage(skinDown.get(counterDown/TIMESKIN-1));
         }
-        collision(keyWeapon);
+        collision();
     }   
     
     private void buildSkins(){
         skinDown.add("images/bomba_caida_A.png");
         skinDown.add("images/bomba_caida_B.png");
     }
+    
+    private void collision(){
+        if(getX() > 590 || getX() < 10 || getY() > 395 || getY() < 10){
+            getWorld().removeObject(this);
+        }  
+        else if(keyWeapon == KEYWEAPONPLAYER){
+            Actor collided = getOneIntersectingObject(Enemie.class);
+            if(collided != null){
+                Enemie.subtractLife(keyWeapon, HURT);
+            } 
+            
+        }
+        else if(keyWeapon == KEYWEAPONENEMIE){
+            if(isTouching(Agent.class)){
+                getWorld().removeObject(this);
+                Life.subtract(HURT);
+            }
+        }
+    } 
 }

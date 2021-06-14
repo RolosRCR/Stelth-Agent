@@ -12,7 +12,7 @@ public class Agent extends Actor
     private boolean jumping;
     private boolean startJumping;
     private int highAgent;
-    private String typeWeapon="MachineGun";
+    private static String typeWeapon="MachineGun";
     private static final int SPEED = 2;
     private static final int JUMPSPEED = 3;
     private static final int HIGHJUMP=40;
@@ -261,4 +261,6 @@ public class Agent extends Actor
                return 100;
         }
     }
+    
+    
 }

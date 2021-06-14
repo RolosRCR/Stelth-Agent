@@ -12,4 +12,6 @@ comment5.params=x\ y
 comment5.target=void\ moveLeft(int,\ int)
 comment6.params=x\ y
 comment6.target=void\ moveRight(int,\ int)
-numComments=7
+comment7.params=
+comment7.target=void\ life()
+numComments=8
