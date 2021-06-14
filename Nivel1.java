@@ -1,29 +1,32 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * Write a description of class MyWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Nivel1 extends World
 {
     private int limitPlatformWidth;
     private int limitPlatformHigh;
     private int sizePlatformHigh;
     private int sizePlatformWidth;
+    private static final int LEVELPOWER=1;
     private int highStairs;
-    private Agent personaje = new Agent();
+    private int highAgent;
+    private int directionAgent; 
+    private static final int LEVEL=1;
+    private Agent player = new Agent();
 
-    /**
-     * Constructor for objects of class MyWorld.
-     * 
-     */
     public Nivel1()
     {    
         super(600, 400, 1); 
         buildMap();
-        addObject(personaje, 250, 380);
+        addObject(player, 50, 380);
+        addObject(new EnemieTypeOne(LEVELPOWER), 250, 292);
+        addObject(new EnemieTypeOne(LEVELPOWER), 250, 382);
+        addObject(new EnemieTypeTwo(), 250, 380);
+        addObject(new EnemieTypeThree(LEVELPOWER), 250, 290);
+        addObject(new Plane(LEVELPOWER), 250, 90); 
+    }
+    
+    public void act(){
+         positionPlayer();  
     }
     
     public void buildMap(){
@@ -49,7 +52,9 @@ public class Nivel1 extends World
             x=x+sizePlatformWidth;
         }
     }
-    public int getAgentPosition(){
-        return personaje.getPositionX();
+    
+    public void positionPlayer(){
+        Enemie.setPositionPlayer(player.getPositionX(), player.getPositionY());
     }
+
 }
