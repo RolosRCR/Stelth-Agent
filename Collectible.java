@@ -14,7 +14,11 @@ public class Collectible extends Actor
      */
     public void act() 
     {
+
+    } 
+
+    public void Coallition(){
         if (isTouching(Agent.class))
-        getWorld().removeObject(this);
-    }    
+            getWorld().removeObject(this);
+    }
 }

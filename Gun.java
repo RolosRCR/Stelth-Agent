@@ -1,30 +1,31 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Gun extends Weapon
 {
-    private static final int SPEED = 4;
     private int direction;
-    private static final int HURT=2;
+    private int keyWeapon;
     private int x;
     private int y;
+    private static final int HURT=2;
+    private static final int SPEED = 4;
+    private static final int RIGHT=1;
+    private static final int LEFT=2;
+    private static final int UP=4;
     
-    public Gun(int direction){
+    public Gun(int direction, int keyWeapon){
         this.direction=direction;
+        this.keyWeapon = keyWeapon;
         setImage("images/gunType1.png");   
     }
     public void act() 
     { 
         x=getX();
         y=getY();
-        if(direction == 1){
-            setLocation(x+SPEED, y); 
-            if(x > 600)
-                getWorld().removeObjects(getWorld().getObjects(Gun.class));   
-        }
-        else if(direction == 2){
-            setLocation(x-SPEED, y);
-            if(x < 0)
-                getWorld().removeObjects(getWorld().getObjects(Gun.class)); 
-        }
-        collision();
+        if(direction == RIGHT)
+            setLocation(x+SPEED, y);
+        else if(direction == LEFT)
+            setLocation(x-SPEED, y);        
+        else if(direction == UP)
+            setLocation(x , y-SPEED);
+        collision(keyWeapon);
     }   
 }

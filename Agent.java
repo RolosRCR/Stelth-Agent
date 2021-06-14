@@ -8,6 +8,11 @@ public class Agent extends Actor
     private int counterUp;
     private int counterDown;
     private int counterGun=0;
+    private int direction;
+    private boolean isJumping;
+    private boolean jumping;
+    private int highAgent;
+    private String typeWeapon="MachineGun";
     private static final int SPEED = 2;
     private static final int JUMPSPEED = 3;
     private static final int HIGHLIMIT = 0;
@@ -17,19 +22,15 @@ public class Agent extends Actor
     private static final int LEFT=2;
     private static final int UP=4;
     private static final int DOWN=3;
+    private static final int UPWEAPON=5;
     private static final int NOMOVEMENT=0;
-    private int direction;
-    private boolean jumping;
-    private boolean isJumping;
-    private int highAgent;
-    private String typeWeapon="MachineGun";
-
+    private static final int KEYWEAPON=1;
     private ArrayList<String> skinAgentRight = new ArrayList();
     private ArrayList<String> skinAgentLeft = new ArrayList();
     private ArrayList<String> skinAgentJump = new ArrayList();
     private ArrayList<String> skinAgentStairs = new ArrayList();
     private ArrayList<String> skinAgentStanding = new ArrayList();
-
+    private ArrayList<String> skinAgentUpWeapon = new ArrayList();
     public Agent(){
 
         buildSkins();
@@ -41,7 +42,7 @@ public class Agent extends Actor
         handleDirection();
     }    
 
-    public void handleDirection(){
+    private void handleDirection(){
         int x = getX();
         int y = getY();
         counterGun++;
@@ -61,8 +62,21 @@ public class Agent extends Actor
                 moveLeft(x, y);
             }
             else if(Greenfoot.isKeyDown("z") && counterGun % cadence(typeWeapon) == 0){
-                getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, direction), getX(), getY());
-            }  
+                getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, direction, KEYWEAPON), getX(), getY());
+            }
+            else if(!isTouching(Stairs.class) && Greenfoot.isKeyDown("up")){
+                if(direction == RIGHT)
+                    setImage(skinAgentUpWeapon.get(direction-1));
+                else if(direction == LEFT)
+                    setImage(skinAgentUpWeapon.get(direction-1));
+                if(counterGun % cadence(typeWeapon) == 0)
+                    getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, UP, KEYWEAPON), getX(), getY());
+            }
+            else if(Greenfoot.isKeyDown("space")){
+                jumping=true;
+                isJumping = true;
+                highAgent=getY();
+            }
             else if (direction != NOMOVEMENT){
                 standing(x, y); 
             }
@@ -94,12 +108,6 @@ public class Agent extends Actor
 
     private void fall(int x, int y){
         setLocation(x, y+FALLSPEED);
-        /*if(isTouching(Platform.class)||isTouching(Box.class)){
-            setLocation(x, y-FALLSPEED);
-            while(!isTouching(Platform.class)){
-                setLocation(x, y++);
-            }
-        }*/
     }
 
     private void moveLeft(int x, int y){
@@ -109,6 +117,7 @@ public class Agent extends Actor
             setLocation(x+SPEED, y);
         counterLeft++;
         counterRight=0;
+        counterGun=0;
         if(counterLeft < (skinAgentLeft.size())*3+3){
             if(counterLeft % 3 == 0)
                 setImage(skinAgentLeft.get(counterLeft/3-1));
@@ -124,6 +133,7 @@ public class Agent extends Actor
             setLocation(x-SPEED, y);
         counterLeft=0;
         counterRight++;
+        counterGun=0;
         if(counterRight < (skinAgentRight.size())*3+3){
             if(counterRight % 3 == 0)
                 setImage(skinAgentRight.get(counterRight/3-1));
@@ -198,6 +208,10 @@ public class Agent extends Actor
                 skinAgentStanding.add("images/Personaje principal_Arriba-Abajo-A.png");
                 skinAgentStanding.add("images/Personaje principal_Arriba-Abajo-B.png");        
             }
+            else if(i == UPWEAPON){
+                skinAgentUpWeapon.add("images/Personaje principal_derechaArriba_A.png");
+                skinAgentUpWeapon.add("images/Personaje principal_izquierdaArriba_A.png");
+            }
         }
     }
 
@@ -209,7 +223,7 @@ public class Agent extends Actor
             setImage(skinAgentJump.get(0));}
         else {
             jumpDirection=-1;
-        setImage(skinAgentJump.get(1));}
+            setImage(skinAgentJump.get(1));}
 
         if(y>highAgent-HIGHJUMP && isJumping && y>HIGHLIMIT){
             y=y-JUMPSPEED;
@@ -218,7 +232,7 @@ public class Agent extends Actor
             isJumping=false;  
         } 
         if(!isTouching(Box.class))
-          x=x+(SPEED*jumpDirection);
+            x=x+(SPEED*jumpDirection);
         setLocation(x , y);
 
         if(!isJumping&&!isTouching(Platform.class)){
@@ -230,20 +244,19 @@ public class Agent extends Actor
         } 
     }
 
+    public int getPositionX(){
+        return getX();   
+    }
 
-        public int getPositionX(){
-            return getX();   
-        }
+    public int getPositionY(){
+        return getY();
+    }
 
-        public int getPositionY(){
-            return getY();
-        }
+    public int getDirection(){
+        return direction;
+    }
 
-        public int getDirection(){
-            return direction;
-        }
-
-        public int cadence(String typeWeapon){
+    private int cadence(String typeWeapon){
         switch(typeWeapon){
             case "Gun":
             return 15;

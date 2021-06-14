@@ -10,6 +10,7 @@ public class Nivel2 extends World
 {
     int screenWidth=600;
     int screenHigh=400;
+    private Agent player=new Agent();
     /**
      * Constructor for objects of class Nivel2.
      * 
@@ -19,7 +20,12 @@ public class Nivel2 extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         buildMap();
-        addObject(new Agent(), 10, 20);
+        addEnemmies();
+        addObject(player, 50, 0);
+    }
+
+    public void act(){
+        positionPlayer();  
     }
 
     private void buildMap()
@@ -43,7 +49,7 @@ public class Nivel2 extends World
             if(x<5)
                 addObject(new PlatformSteel(),x*Platform.getWidth(),60);
         }
-           addObject(new PlatformSteel(),560,110);
+        addObject(new PlatformSteel(),560,110);
     }
 
     private void buildPlatformsStone(){
@@ -51,16 +57,16 @@ public class Nivel2 extends World
     }
 
     private void buildStairs(){
-       addObject(new Stairs(3), 560,55);
-       addObject(new Stairs(3), 400,180);
+        addObject(new Stairs(3), 560,55);
+        addObject(new Stairs(3), 400,180);
         addObject(new Stairs(3), 400,220);
-        
+
     }
 
     private void buildBoxes(){
         addObject(new Box(), 240, 125);
         addObject(new Box(), 330, 90);
-        
+
         addObject(new Box(), 430, 125);
         addObject(new Box(), 430, 125-Box.getHigh());
         addObject(new Box(), 430+Box.getWidth(), 125);
@@ -81,17 +87,28 @@ public class Nivel2 extends World
     }
 
     private void buildGoal(){
-            addObject(new PlatformNextLevel(), 560,400);
-            addObject(new Arrow(), 558,370);
+        addObject(new PlatformNextLevel(), 560,400);
+        addObject(new Arrow(), 558,370);
     }
+
     private void buildCollectibles(){
         addObject(new USBBonus(), 560,10);
         addObject(new USBBonus(), 560,245);
         addObject(new USBBonus(), 35,245);
         addObject(new USBBonus(), 300,370);
-        addObject(new BulletsBoost(), 250,200);
+        addObject(new CadenceBoost(), 250,200);
+    }
+
+    public void positionPlayer(){
+        Enemie.setPositionPlayer(player.getPositionX(), player.getPositionY());
+
+    }
+
+    private void addEnemmies(){
+        addObject(new EnemieTypeThree(1),50,131);
+        addObject(new EnemieTypeOne(2),300,131);
+        addObject(new EnemieTypeOne(2),200,251);
+        addObject(new EnemieTypeThree(3),450,378);
     }
 }
-
-
 

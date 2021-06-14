@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=EnemieTypeThree
+comment1.params=levelPower
+comment1.target=EnemieTypeThree(int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ handleDirection()
+comment4.params=
+comment4.target=void\ buildSkins()
+comment5.params=x\ y
+comment5.target=void\ moveLeft(int,\ int)
+comment6.params=x\ y
+comment6.target=void\ moveRight(int,\ int)
+comment7.params=position
+comment7.target=void\ standing(int)
+comment8.params=
+comment8.target=void\ setWeapon()
+numComments=9

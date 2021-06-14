@@ -14,6 +14,6 @@ public class BulletsBoost extends Boost
      */
     public void act() 
     {
-        // Add your action code here.
+        Coallition();
     }    
 }

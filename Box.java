@@ -11,9 +11,10 @@ public class Box extends Actor
     private static int boxWidth=42;
     private static int boxHigh=37;
     public static int getWidth(){
-    return boxWidth;
+        return boxWidth;
     }
+
     public static int getHigh(){
-    return boxHigh;
+        return boxHigh;
     }
 }

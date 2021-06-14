@@ -1,25 +1,17 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * Write a description of class MyWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Nivel1 extends World
 {
     int screenWidth=600;
     int screenHigh=400;
-    /**
-     * Constructor for objects of class Nivel2.
-     * 
-     */
+    private Agent player=new Agent();
     public Nivel1()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         buildMap();
-        addObject(new Agent(), 475, 50);
+        addEnemmies();
+        addObject(player, 475, 45);
     }
 
     private void buildMap()
@@ -29,6 +21,11 @@ public class Nivel1 extends World
         buildPlatformBoxes();
         buildCollectibles();
         buildGoal();
+
+    }
+
+    public void act(){
+        positionPlayer();  
     }
 
     private void buildPlatformsSteel(){
@@ -59,13 +56,25 @@ public class Nivel1 extends World
     }
 
     private void buildGoal(){
-         addObject(new PlatformNextLevel(), 35,365);
-         addObject(new Arrow(), 50,335);
+        addObject(new PlatformNextLevel(), 35,365);
+        addObject(new Arrow(), 50,335);
     }
+
     private void buildCollectibles(){
         addObject(new USBBonus(), 510,110);
         addObject(new USBBonus(), 135,245);
         addObject(new USBBonus(), 350,270);
         addObject(new USBBonus(), 560,310);
+    }
+
+    public void positionPlayer(){
+        Enemie.setPositionPlayer(player.getPositionX(), player.getPositionY());
+
+    }
+
+    private void addEnemmies(){
+        addObject(new EnemieTypeOne(1),550,183);
+        addObject(new EnemieTypeOne(1),50,183);
+        addObject(new EnemieTypeOne(1),500,317);
     }
 }

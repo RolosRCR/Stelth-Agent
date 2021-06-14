@@ -14,6 +14,6 @@ public class USBBonus extends Collectible
      */
     public void act() 
     {
-        // Add your action code here.
+        Coallition();
     }    
 }
