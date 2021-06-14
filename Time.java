@@ -1,19 +1,30 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * Write a description of class Time here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Time extends Hud
 {
-    /**
-     * Act - do whatever the Time wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
-    }    
+    private int timmer = 2*60*55;
+    private String text;
+    
+    public Time(){
+        text = "Time: " + timmer/(60*55) + ": ";
+        buildSign(text, timmer/55);
+    }  
+    
+    public void act() {
+        if(--timmer != 0) {
+            text = "Time: " + timmer/(60*55) + ": ";
+            updateImage(text, (timmer%(60*55))/55);
+        }
+        else{
+            lives();
+        }
+    }
+   
+    
+    private void lives(){
+            lives--; 
+            Score.score();
+            Life.setLife();
+            Greenfoot.setWorld(new Nivel1());
+    }
 }

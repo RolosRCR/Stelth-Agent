@@ -24,9 +24,8 @@ public class Life extends Hud
         if(life <= 0){
             lives--; 
             Score.score();
+            setLife();
             Greenfoot.setWorld(new Nivel1());
-            life=100;
-            objective=100;
         }
     }
     
@@ -35,4 +34,8 @@ public class Life extends Hud
         objective = 100;
     }
    
+    public static void setLife(){
+         life=100;
+         objective=100;
+    }
 }

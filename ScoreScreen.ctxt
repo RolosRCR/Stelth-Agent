@@ -2,7 +2,13 @@
 comment0.target=ScoreScreen
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ ScoreScreen\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
-comment1.target=ScoreScreen()
-comment2.params=name\ score
-comment2.target=void\ addScore(java.lang.String,\ int)
-numComments=3
+comment1.target=void\ act()
+comment2.params=
+comment2.target=ScoreScreen()
+comment3.params=name\ score
+comment3.target=void\ addScore(java.lang.String,\ int)
+comment4.params=p1\ p2
+comment4.target=int\ compare(Player,\ Player)
+comment5.params=
+comment5.target=void\ stopMusic()
+numComments=6

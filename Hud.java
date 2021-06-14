@@ -13,7 +13,7 @@ public class Hud extends Actor
     public static int totalScore;
     private int stringLength;
     private static int amountEnemies;
-    private static int scoreEnemies;    
+    private static int scoreEnemies;
 
     public void act() {
     }

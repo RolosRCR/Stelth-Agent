@@ -8,14 +8,13 @@ public class Score extends Hud
     public Score(){
         score = totalScore;
         objective = totalScore;
-        buildSign(text, 0);
+        buildSign(text, score);
     }   
     public void act() {
         if(score < objective) {
             score++;
             updateImage(text, score);
         }
-        //score();
     }
     
     public static void addScore(int points){

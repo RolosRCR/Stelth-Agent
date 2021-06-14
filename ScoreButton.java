@@ -8,10 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class ScoreButton extends Button
 {
-    /**
-     * Act - do whatever the ScoreBotton wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    public ScoreButton(){   
+    }
     public ScoreButton(Observer ... observers)
     {
         super(observers);
@@ -22,8 +20,8 @@ public class ScoreButton extends Button
         super.act();
         if (Greenfoot.mouseClicked(this))
         {
+            ScoreScreen.stopMusic();
             Greenfoot.setWorld(new ScoreScreen());
-            
         }
     }    
 }
