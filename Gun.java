@@ -26,6 +26,7 @@ public class Gun extends Weapon
             setLocation(x-SPEED, y);        
         else if(direction == UP)
             setLocation(x , y-SPEED);
-        collision(keyWeapon);
-    }   
+        collision(keyWeapon,HURT);
+    } 
+
 }

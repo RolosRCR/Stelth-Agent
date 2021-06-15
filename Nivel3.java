@@ -1,5 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import greenfoot.*;  
+import javax.swing.*;
 /**
  * Write a description of class Nivel3 here.
  * 
@@ -11,21 +11,23 @@ public class Nivel3 extends World
     int screenWidth=600;
     int screenHigh=400;
     private Agent player=new Agent();
-    /**
-     * Constructor for objects of class Nivel3.
-     * 
-     */
+    private static final int LEVEL=3;
+    private Plane finalBoss = new Plane(1);
+    public static GreenfootSound musicLevel3=new GreenfootSound("Level3Music.mp3");
     public Nivel3()
     {    
 
         super(600, 400, 1); 
         buildMap();
+        buildHUD();
         addEnemmies();
         addObject(player, 510, 50);
     }
 
     public void act(){
-        positionPlayer();  
+        positionPlayer();
+        compareLives();
+        playMusic();    
     }
 
     private void buildMap(){
@@ -34,6 +36,14 @@ public class Nivel3 extends World
         buildBoxes();
         buildPlatformBoxes();
         buildCollectibles();
+    }
+    private void buildHUD(){
+        Level.setLevel(LEVEL);
+        addObject(new Level(), 78, 20);
+        addObject(new Time(), 93, 40);
+        addObject(new Life(), 250, 20);
+        addObject(new Score(), 210, 40);
+        Life.setHudLife();
     }
 
     private void buildPlatformsSteel(){
@@ -67,11 +77,31 @@ public class Nivel3 extends World
 
     public void positionPlayer(){
         Enemie.setPositionPlayer(player.getPositionX(), player.getPositionY());
-
     }
 
     private void addEnemmies(){
         addObject(new EnemieTypeThree(1),370,378);
-        addObject(new Plane(1),100,50);
+        addObject(finalBoss,100,50);
+    }
+    private void compareLives(){
+        if(Hud.getLives() <= 0){
+            musicLevel3.stop();
+            String name = JOptionPane.showInputDialog("Introduce Nombre");
+            Greenfoot.setWorld(new GameOverScreen());
+            ScoreScreen.addScore(name + " : ", Hud.getTotalScore());
+        }
+        else if(finalBoss.getlife()<=0){
+            musicLevel3.stop();
+            String name = JOptionPane.showInputDialog("Introduce Nombre");           
+            Greenfoot.setWorld(new WinScreen());
+            ScoreScreen.addScore(name + " : ", Hud.getTotalScore());
+        }
+    }
+    private void playMusic(){
+        if(!musicLevel3.isPlaying())
+        {   
+            musicLevel3.setVolume(20);
+            musicLevel3.play();
+        }
     }
 }

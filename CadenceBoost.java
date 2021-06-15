@@ -8,12 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class CadenceBoost extends Boost
 {
-    /**
-     * Act - do whatever the SpeedBomus wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        Coallition();
-    }    
+    public CadenceBoost(){
+    POINTS=50;
+    improvementType="SemiAutomatic";
+    }
 }

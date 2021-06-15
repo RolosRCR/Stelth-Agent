@@ -1,31 +1,30 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
+import javax.swing.*;  
 
-/**
- * Write a description of class Nivel2 here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Nivel2 extends World
 {
     int screenWidth=600;
     int screenHigh=400;
     private Agent player=new Agent();
-    /**
-     * Constructor for objects of class Nivel2.
-     * 
-     */
+    private static final int LEVEL=2;
+    public static GreenfootSound musicLevel2=new GreenfootSound("Level2Music.mp3");
+    private PlatformNextLevel meta = new PlatformNextLevel();
+
     public Nivel2()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         buildMap();
+        buildHUD();
         addEnemmies();
-        addObject(player, 50, 0);
+        addObject(player, 50, 50);
+        
     }
 
     public void act(){
-        positionPlayer();  
+        positionPlayer();
+        
+        playMusic();
+        compareLives();
     }
 
     private void buildMap()
@@ -38,6 +37,14 @@ public class Nivel2 extends World
         buildGoal();
         buildCollectibles();
     }
+    private void buildHUD(){
+        Level.setLevel(LEVEL);
+        addObject(new Level(), 78, 20);
+        addObject(new Time(), 93, 40);
+        addObject(new Life(), 250, 20);
+        addObject(new Score(), 210, 40);
+        Life.setHudLife();
+    }
 
     private void buildPlatformsSteel(){
         for(int x=0;x<(screenWidth/Platform.getWidth())+1;x++){
@@ -47,7 +54,7 @@ public class Nivel2 extends World
                 addObject(new PlatformSteel(), x*Platform.getWidth(),270);
             addObject(new PlatformSteel(), x*Platform.getWidth(),590);
             if(x<5)
-                addObject(new PlatformSteel(),x*Platform.getWidth(),60);
+                addObject(new PlatformSteel(),x*Platform.getWidth(),100);
         }
         addObject(new PlatformSteel(),560,110);
     }
@@ -70,25 +77,22 @@ public class Nivel2 extends World
         addObject(new Box(), 430, 125);
         addObject(new Box(), 430, 125-Box.getHigh());
         addObject(new Box(), 430+Box.getWidth(), 125);
-        addObject(new Box(), 560, 125);
-        addObject(new Box(), 250, 245);
-        addObject(new Box(), 95, 375);
+
     }
 
     private void buildPlatformBoxes(){
         addObject(new PlatformBox(),239,105);
         addObject(new PlatformBox(),329,70);
-
         addObject(new PlatformBox(), 430, 105-Box.getHigh());
         addObject(new PlatformBox(), 430+Box.getWidth(), 105);
         addObject(new PlatformBox(), 560, 105);
-        addObject(new PlatformBox(), 250, 225);
-        addObject(new PlatformBox(), 95, 355);
+        addObject(new PlatformBox(), 250, 245);
+        addObject(new PlatformBox(), 95, 375);
     }
 
     private void buildGoal(){
-        addObject(new PlatformNextLevel(), 560,400);
-        addObject(new Arrow(), 558,370);
+        addObject(meta, 560,400);
+        addObject(new Arrow(), 553,373);
     }
 
     private void buildCollectibles(){
@@ -108,7 +112,25 @@ public class Nivel2 extends World
         addObject(new EnemieTypeThree(1),50,131);
         addObject(new EnemieTypeOne(2),300,131);
         addObject(new EnemieTypeOne(2),200,251);
-        addObject(new EnemieTypeThree(3),450,378);
+        addObject(new EnemieTypeThree(2),450,378);
+    }
+    private void compareLives(){
+        if(Hud.getLives() <= 0){
+            musicLevel2.stop();
+            String name = JOptionPane.showInputDialog("Introduce Nombre");
+            Greenfoot.setWorld(new GameOverScreen());
+            ScoreScreen.addScore(name + " : ", Hud.getTotalScore());
+        }
+    }
+    private void playMusic(){
+        if(!musicLevel2.isPlaying())
+        {   
+            musicLevel2.setVolume(20);
+            musicLevel2.play();
+        }
+        if(meta.isTouchedByAgent()){
+            musicLevel2.stop();
+        }
     }
 }
 

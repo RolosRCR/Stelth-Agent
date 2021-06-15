@@ -12,19 +12,19 @@ public class Agent extends Actor
     private boolean isJumping;
     private boolean jumping;
     private int highAgent;
-    private String typeWeapon="MachineGun";
-    private static final int SPEED = 2;
-    private static final int JUMPSPEED = 3;
-    private static final int HIGHLIMIT = 0;
-    private static final int FALLSPEED = 3;
+    static String typeWeapon;
+    private final int SPEED = 2;
+    private final int JUMPSPEED = 3;
+    private final int HIGHLIMIT = 0;
+    private final int FALLSPEED = 3;
     private static final int HIGHJUMP=50;
-    private static final int RIGHT=1;
-    private static final int LEFT=2;
-    private static final int UP=4;
-    private static final int DOWN=3;
-    private static final int UPWEAPON=5;
-    private static final int NOMOVEMENT=0;
-    private static final int KEYWEAPON=1;
+    private final int RIGHT=1;
+    private final int LEFT=2;
+    private final int UP=4;
+    private final int DOWN=3;
+    private final int UPWEAPON=5;
+    private final int NOMOVEMENT=0;
+    private final int KEYWEAPON=1;
     private ArrayList<String> skinAgentRight = new ArrayList();
     private ArrayList<String> skinAgentLeft = new ArrayList();
     private ArrayList<String> skinAgentJump = new ArrayList();
@@ -32,7 +32,7 @@ public class Agent extends Actor
     private ArrayList<String> skinAgentStanding = new ArrayList();
     private ArrayList<String> skinAgentUpWeapon = new ArrayList();
     public Agent(){
-
+        typeWeapon="Gun";
         buildSkins();
         setImage("images/Personaje principal_derecha_A.png");   
     }    
@@ -234,8 +234,11 @@ public class Agent extends Actor
         if(!isTouching(Box.class))
             x=x+(SPEED*jumpDirection);
         setLocation(x , y);
-
-        if(!isJumping&&!isTouching(Platform.class)){
+        if(!isJumping&&isTouching(Platform.class)&&isTouching(Box.class)){
+            y=y+JUMPSPEED;
+            setLocation(x-(SPEED*jumpDirection),y);
+        }
+        else if(!isJumping&&!isTouching(Platform.class)){
             y=y+JUMPSPEED;
             setLocation(x,y);
             if(isTouching(Platform.class)){
@@ -268,4 +271,5 @@ public class Agent extends Actor
             return 100;
         }
     }
+    
 }

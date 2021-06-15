@@ -6,6 +6,7 @@ public class Plane extends Enemie
     private int counterRight;
     private int counterLeft;
     private int counterGun=0;
+    private int life=60;
     private double direction;
     private static final String TYPEWEAPON= "Bomb";
     private int levelPower;
@@ -48,9 +49,10 @@ public class Plane extends Enemie
                 }
             }
             if(counterGun % cadenceWeapon == 0){
-                getWorld().addObject(TypeWeaponFactory.buildWeapon(TYPEWEAPON, 0, KEYWEAPON), x - 15, y);
+                getWorld().addObject(TypeWeaponFactory.buildWeapon(TYPEWEAPON, 0, KEYWEAPONENEMIE), x, y + 35);
             }
         }
+        life();
     }
     
     private void buildSkins(){
@@ -122,13 +124,31 @@ public class Plane extends Enemie
     
     private void setWeapon(){        
         if(levelPower == 1){
-            cadenceWeapon = 60;
+            cadenceWeapon = 15;
         }
         else if(levelPower == 2){
-            cadenceWeapon = 50;
+            cadenceWeapon = 10;
         }
         else if(levelPower == 3){
-            cadenceWeapon = 40;
+            cadenceWeapon = 5;
         }
+    }
+    
+    public void life(){
+        Actor collided = getOneIntersectingObject(Weapon.class);
+        if(collided != null){
+            if(keyWeaponPlayer == 1){
+                life -= hurtPlayer;
+                getWorld().removeObject(collided);
+            }
+        } 
+        if(life <= 0){
+            getWorld().removeObject(this);
+            Score.addScore(Enemie.getPoints());
+            Hud.subtractAmountEnemies();
+        }
+    }
+    public int getlife(){
+    return life;
     }
 }
