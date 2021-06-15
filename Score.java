@@ -21,7 +21,7 @@ public class Score extends Hud
         objective += points;
     }
     
-    public static void score(){
+    public static void passScoreToNewLevel(){
         totalScore = score;
     }
     
@@ -29,5 +29,7 @@ public class Score extends Hud
         score = 0;
         objective = 0;
     }
-    
+    public int getScore(){
+    return totalScore;
+    }
 }

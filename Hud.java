@@ -22,9 +22,8 @@ public class Hud extends Actor
         setImage(new GreenfootImage(stringLength, 24));
         GreenfootImage image = getImage();
         Font font = image.getFont();
-        image.setFont(font.deriveFont(24.0F));
-        image.setColor(Color.BLACK);
-        
+        image.setFont(font.deriveFont(15.0F));
+        image.setColor(Color.YELLOW); 
         updateImage(sign, points);
     }
 

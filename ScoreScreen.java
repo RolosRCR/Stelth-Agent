@@ -29,10 +29,9 @@ public class ScoreScreen extends World
    {            
         super(600, 400, 1); 
         addObject(new BackButton(),21,13);
-        //addObject(new Records("Jorge", 5), 250, 50);
         for(int i=0; i<players.size(); i++){
            player = players.get(i);
-           addObject(new Records(player.getName(), player.getScore()), 250, 50+(i*20));
+           addObject(new Records(player.getName(), player.getScore()), 350, 100+(i*20));
         }
    }
    

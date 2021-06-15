@@ -6,7 +6,6 @@ public class InitialScreen extends World
     
     public InitialScreen()
     {    
-        
         super(600, 400, 1);
         prepare();
     }
@@ -22,7 +21,7 @@ public class InitialScreen extends World
  
         if(!music.isPlaying())
         { 
-            music.setVolume(5);
+            music.setVolume(15);
             music.play();
         }
         if(Greenfoot.isKeyDown("space"))

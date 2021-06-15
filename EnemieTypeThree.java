@@ -33,17 +33,24 @@ public class EnemieTypeThree extends Enemie
     private void handleDirection(){
         int x = getX();
         int y = getY();
-        //counterGun++;
         if(isTouching(Platform.class) && direction != STAND){
             if((int)direction==RIGHT){
                 moveRight(x, y);
-                if(x > 590)
+                if(x > 590||isTouching(Box.class))
                     direction=LEFT;
+                if(!isTouching(Platform.class)){
+                    direction=LEFT;
+                    setLocation(x-20,y);
+                }
             }   
             else if((int)direction==LEFT){
                 moveLeft(x, y);
-                if(x<10)
-                    direction = RIGHT;
+                if(x<10||isTouching(Box.class)||!isTouching(Platform.class))
+                    direction=RIGHT;
+                if(!isTouching(Platform.class)){
+                    direction=RIGHT;
+                    setLocation(x+20,y);}
+
             }
             
             if(getPositionYPlayer() > y){

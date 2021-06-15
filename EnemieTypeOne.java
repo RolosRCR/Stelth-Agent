@@ -11,12 +11,13 @@ public class EnemieTypeOne extends Enemie
     private double direction;
     private String typeWeapon;
     private int cadenceWeapon;
-    private static final int SPEED = 2;
-        
+    private static final int SPEED = 1;
+
+
     private ArrayList<String> skinEnemieRight = new ArrayList();
     private ArrayList<String> skinEnemieLeft = new ArrayList();
     private ArrayList<String> skinEnemieStanding = new ArrayList();
-    
+
     public EnemieTypeOne(int levelPower){
         this.levelPower = levelPower;
         buildSkins();
@@ -24,12 +25,12 @@ public class EnemieTypeOne extends Enemie
         setImage("images/enemigo1_derecha_A.png");  
         direction=Math.random()*2+1;
     }   
-    
+
     public void act() 
     {
         handleDirection();
     } 
-    
+
     private void handleDirection(){
         int x = getX();
         int y = getY();
@@ -37,15 +38,23 @@ public class EnemieTypeOne extends Enemie
         if(isTouching(Platform.class) && direction != STAND){
             if((int)direction==RIGHT){
                 moveRight(x, y);
-                if(x > 590)
+                if(x > 590||isTouching(Box.class))
                     direction=LEFT;
+                if(!isTouching(Platform.class)){
+                    direction=LEFT;
+                    setLocation(x-20,y);
+                }
             }   
             else if((int)direction==LEFT){
                 moveLeft(x, y);
-                if(x<10)
-                    direction = RIGHT;
+                if(x<10||isTouching(Box.class)||!isTouching(Platform.class))
+                    direction=RIGHT;
+                if(!isTouching(Platform.class)){
+                    direction=RIGHT;
+                    setLocation(x+20,y);}
+
             }
-            
+
             if(getPositionYPlayer() > y){
                 if(getPositionYPlayer() - y < 10)
                     direction = STAND;
@@ -56,6 +65,7 @@ public class EnemieTypeOne extends Enemie
             }
         }
         else if(direction == STAND){
+
             counterGun++;
             if(getPositionXPlayer() > getX()){
                 standing(RIGHT);  
@@ -67,7 +77,7 @@ public class EnemieTypeOne extends Enemie
                 if(counterGun % cadenceWeapon ==0)
                     getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, LEFT, KEYWEAPONENEMIE), x - 15, y);
             }
-            
+
             if(getPositionYPlayer() > y){
                 if(getPositionYPlayer() - y > 10){
                     direction =Math.random()*2+1;
@@ -83,7 +93,7 @@ public class EnemieTypeOne extends Enemie
         }
         life();
     }
-    
+
     private void buildSkins(){
         int typeMovements=3;
         for(int i=0; i<typeMovements; i++){
@@ -109,7 +119,7 @@ public class EnemieTypeOne extends Enemie
             }
         }
     } 
-    
+
     private void moveLeft(int x, int y){
         direction=LEFT;
         setLocation(x-SPEED, y);
@@ -122,7 +132,7 @@ public class EnemieTypeOne extends Enemie
         else
             counterLeft=0;
     }
-    
+
     private void moveRight(int x, int y){
         direction=RIGHT;
         setLocation(x+SPEED, y);
@@ -135,11 +145,11 @@ public class EnemieTypeOne extends Enemie
         else
             counterRight=0;
     }
-    
+
     private void standing(int position){
         setImage(skinEnemieStanding.get(position-1));
     }
-    
+
     private void setWeapon(){               
         if(levelPower == 1){
             typeWeapon= "Gun";

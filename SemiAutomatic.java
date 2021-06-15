@@ -26,26 +26,7 @@ public class SemiAutomatic extends Weapon
             setLocation(x-SPEED, y);        
         else if(direction == UP)
             setLocation(x , y-SPEED);
-        collision();
+        collision(keyWeapon,HURT);
     }   
     
-    private void collision(){
-        if(getX() > 590 || getX() < 10 || getY() > 395 || getY() < 10 && isTouching(Platform.class)){
-            getWorld().removeObject(this);
-        }  
-        else if(keyWeapon == KEYWEAPONPLAYER){
-            Actor collided = getOneIntersectingObject(Enemie.class);
-            if(collided != null){
-                Enemie.subtractLife(keyWeapon, HURT);
-            } 
-            
-        }
-        else if(keyWeapon == KEYWEAPONENEMIE){
-            if(isTouching(Agent.class)){
-                getWorld().removeObject(this);
-                Life.subtract(HURT);
-                Enemie.subtractLife(keyWeapon, HURT);
-            }
-        }
-    } 
 }

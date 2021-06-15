@@ -1,85 +1,124 @@
 import greenfoot.*;
+import javax.swing.*;
 
 public class Nivel1 extends World
 {
-    private int limitPlatformWidth;
-    private int limitPlatformHigh;
-    private int sizePlatformHigh;
-    private int sizePlatformWidth;
-    private static final int LEVELPOWER=1;
+
+    int screenWidth=600;
+    int screenHigh=400;
+    private Agent player=new Agent();
+    private static final int ENEMIESLEVELPOWER=1;
     private int amountEnemies=4;
-    private int highStairs;
-    private int highAgent;
-    private int directionAgent; 
     private static final int LEVEL=1;
-    private Agent player = new Agent();
+    public static GreenfootSound musicLevel1=new GreenfootSound("Level1Music.mp3");
+    private PlatformNextLevel meta = new PlatformNextLevel();
 
     public Nivel1()
-    {    
-        super(600, 400, 1); 
-        Level.setLevel(LEVEL);
+    {   
+        
+        super(600, 400, 1);
         buildMap();
-        addObject(new Level(), 205, 10);
-        addObject(new Time(), 505, 90);
-        addObject(new Life(), 205, 90);
-        addObject(new Score(), 205, 50);
-        addObject(player, 50, 380);
-        addObject(new EnemieTypeOne(LEVELPOWER), 250, 292);
-        addObject(new EnemieTypeOne(LEVELPOWER), 250, 382);
-        addObject(new EnemieTypeTwo(), 250, 380);
-        addObject(new EnemieTypeThree(LEVELPOWER), 250, 290);
-        addObject(new Plane(LEVELPOWER), 250, 90); 
-        Life.setHudLife();
+        buildHUD();
+        addEnemmies();
         Hud.setAmountEnemies(amountEnemies);
+        addObject(player, 475, 44);
+    }
+
+    public void act(){
+        positionPlayer(); 
+        playMusic();
+        compareLives();
+        
+    }
+
+    private void buildMap()
+    {
+
+        buildPlatformsSteel();
+        buildBoxes();
+        buildPlatformBoxes();
+        buildCollectibles();
+        buildGoal();
 
     }
-    
-    public void act(){
-        positionPlayer();
-        compareEnemies();
-        compareLives();
+
+    private void buildHUD(){
+        Level.setLevel(LEVEL);
+
+        addObject(new Level(), 78, 20);
+        addObject(new Time(), 93, 40);
+        addObject(new Life(), 250, 20);
+        addObject(new Score(), 210, 40);
+        Life.setHudLife();
     }
-    
-    public void buildMap(){
-        int x=0;
-        int y=400;
-        sizePlatformHigh = 90;
-        sizePlatformWidth = 21;
-        limitPlatformWidth=600/sizePlatformWidth+1;
-        limitPlatformHigh=400/sizePlatformHigh;
-        highStairs=350;
-        for(int i=0; i<limitPlatformWidth; i++){
-            for(int j=0; j<limitPlatformHigh; j++){
-                 if(i% 5 ==0 && y != 400){
-                     this.addObject(new PlatformStone(), x, y);
-                     this.addObject(new Stairs(), x, highStairs);
-                 }
-                 else{
-                     this.addObject(new PlatformSteel(), x, y); 
-                 }
-                 y=y-sizePlatformHigh;
-            }
-            y=400;
-            x=x+sizePlatformWidth;
+
+
+    private void buildPlatformsSteel(){
+        int y=210;
+        for(int x=0;x<(screenWidth/Platform.getWidth())+1;x++){
+
+            if(x> 21&&x<24)
+                addObject(new PlatformSteel(), x*Platform.getWidth(),65);
+
+            if(x<4||x>9)
+                addObject(new PlatformSteel(), x*Platform.getWidth(),200);
+            if(x>4)
+                addObject(new PlatformSteel(), x*Platform.getWidth(),335);
+
         }
+
     }
-    
+
+    private void buildBoxes(){
+        addObject(new Box(), 350, 175);
+        addObject(new Box(), 350, 310);
+    }
+
+    private void buildPlatformBoxes(){
+        addObject(new PlatformBox(), 350, 155);
+        addObject(new PlatformBox(), 350, 290);
+
+    }
+
+    private void buildGoal(){
+        addObject(meta, 35,365);
+        addObject(new Arrow(), 50,335);
+    }
+
+    private void buildCollectibles(){
+        addObject(new USBBonus(), 510,110);
+        addObject(new USBBonus(), 135,245);
+        addObject(new USBBonus(), 350,270);
+        addObject(new USBBonus(), 560,310);
+    }
+
     public void positionPlayer(){
         Enemie.setPositionPlayer(player.getPositionX(), player.getPositionY());
-    }  
-    
-    public static void compareEnemies(){
-        if(Hud.getAmountEnemies() == 0){
-            Score.score();
-            Hud.updateScore();   
-            //Greenfoot.setWorld(new Nivel2());
-        } 
     }
-    
-    public static void compareLives(){
-        if(Hud.getLives() <= 0){           
-            Greenfoot.setWorld(new MenuScreen());
-            ScoreScreen.addScore("Jorge: ", Hud.getTotalScore()); 
+
+    private void addEnemmies(){
+        addObject(new EnemieTypeOne(ENEMIESLEVELPOWER),550,183);
+        addObject(new EnemieTypeOne(ENEMIESLEVELPOWER),50,183);
+        addObject(new EnemieTypeOne(ENEMIESLEVELPOWER),500,317);
+    }
+
+    private void compareLives(){
+        if(Hud.getLives() <= 0 ){
+            musicLevel1.stop();
+            String name = JOptionPane.showInputDialog("Introduce Nombre");            
+            Greenfoot.setWorld(new GameOverScreen());
+            ScoreScreen.addScore(name + " : ", Hud.getTotalScore());
+        }
+    }
+
+    private void playMusic(){
+        if(!musicLevel1.isPlaying())
+        {   
+            musicLevel1.setVolume(20);
+            musicLevel1.play();
+        }
+        if(meta.isTouchedByAgent()){
+            musicLevel1.stop();
         }
     }
 }

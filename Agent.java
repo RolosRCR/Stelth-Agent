@@ -9,43 +9,53 @@ public class Agent extends Actor
     private int counterDown;
     private int counterGun=0;
     private int direction;
+    private boolean isJumping;
     private boolean jumping;
-    private boolean startJumping;
     private int highAgent;
-    private static String typeWeapon="MachineGun";
-    private static final int SPEED = 2;
-    private static final int JUMPSPEED = 3;
-    private static final int HIGHJUMP=40;
-    private static final int RIGHT=1;
-    private static final int LEFT=2;
-    private static final int UP=4;
-    private static final int DOWN=3;
-    private static final int UPWEAPON=5;
-    private static final int NOMOVEMENT=0;
-    private static final int KEYWEAPON=1;
-    
+    static String typeWeapon;
+    private final int SPEED = 2;
+    private final int JUMPSPEED = 3;
+    private final int HIGHLIMIT = 0;
+    private final int FALLSPEED = 3;
+    private static final int HIGHJUMP=50;
+    private final int RIGHT=1;
+    private final int LEFT=2;
+    private final int UP=4;
+    private final int DOWN=3;
+    private final int UPWEAPON=5;
+    private final int NOMOVEMENT=0;
+    private final int KEYWEAPON=1;
     private ArrayList<String> skinAgentRight = new ArrayList();
     private ArrayList<String> skinAgentLeft = new ArrayList();
     private ArrayList<String> skinAgentJump = new ArrayList();
     private ArrayList<String> skinAgentStairs = new ArrayList();
     private ArrayList<String> skinAgentStanding = new ArrayList();
     private ArrayList<String> skinAgentUpWeapon = new ArrayList();
-    
     public Agent(){
-
+        typeWeapon="Gun";
         buildSkins();
         setImage("images/Personaje principal_derecha_A.png");   
     }    
+
     public void act() 
     {
         handleDirection();
     }    
+
     private void handleDirection(){
         int x = getX();
         int y = getY();
         counterGun++;
-        if(isTouching(Platform.class) && direction != DOWN && direction != UP && !jumping){
-            if(Greenfoot.isKeyDown("right")){
+        if(!isTouching(Platform.class) && !isTouching(Stairs.class) &&!jumping){
+            fall(x, y);
+        }
+        else if(isTouching(Platform.class) && direction != DOWN && direction != UP && !jumping){
+            if(Greenfoot.isKeyDown("space")){
+                jumping=true;
+                isJumping = true;
+                highAgent=getY();
+            }
+            else if(Greenfoot.isKeyDown("right")){
                 moveRight(x, y);
             }   
             else if(Greenfoot.isKeyDown("left")){
@@ -60,11 +70,11 @@ public class Agent extends Actor
                 else if(direction == LEFT)
                     setImage(skinAgentUpWeapon.get(direction-1));
                 if(counterGun % cadence(typeWeapon) == 0)
-                 getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, UP, KEYWEAPON), getX(), getY());
+                    getWorld().addObject(TypeWeaponFactory.buildWeapon(typeWeapon, UP, KEYWEAPON), getX(), getY());
             }
             else if(Greenfoot.isKeyDown("space")){
                 jumping=true;
-                startJumping = true;
+                isJumping = true;
                 highAgent=getY();
             }
             else if (direction != NOMOVEMENT){
@@ -74,6 +84,7 @@ public class Agent extends Actor
         else if(jumping){
             jump(x, y);
         }
+
         if(isTouching(Stairs.class)  && direction != NOMOVEMENT && !jumping){
             if(Greenfoot.isKeyDown("down") && !isTouching(PlatformSteel.class)){                          
                 moveDown(x, y);
@@ -92,12 +103,18 @@ public class Agent extends Actor
                 direction=NOMOVEMENT;
             }
         }
-        
+
     }
-    
+
+    private void fall(int x, int y){
+        setLocation(x, y+FALLSPEED);
+    }
+
     private void moveLeft(int x, int y){
         direction=LEFT;
         setLocation(x-SPEED, y);
+        if(isTouching(Box.class))
+            setLocation(x+SPEED, y);
         counterLeft++;
         counterRight=0;
         counterGun=0;
@@ -108,10 +125,12 @@ public class Agent extends Actor
         else
             counterLeft=0;
     }
-    
+
     private void moveRight(int x, int y){
         direction=RIGHT;
         setLocation(x+SPEED, y);
+        if(isTouching(Box.class))
+            setLocation(x-SPEED, y);
         counterLeft=0;
         counterRight++;
         counterGun=0;
@@ -122,7 +141,7 @@ public class Agent extends Actor
         else
             counterRight=0;
     }
-    
+
     private void moveDown(int x, int y){  
         setLocation(x, y +SPEED);
         direction = DOWN;
@@ -136,7 +155,7 @@ public class Agent extends Actor
         else
             counterDown=0;
     } 
-    
+
     private void moveUp(int x, int y){
         setLocation(x, y - SPEED);
         direction = UP;
@@ -150,14 +169,14 @@ public class Agent extends Actor
         else
             counterUp=0;
     }
-    
+
     private void standing(int x, int y){
         setImage(skinAgentStanding.get(direction-1));
     }
-    
+
     private void buildSkins(){
         int movementTypes=5;
-        
+
         for(int i=0; i<=5; i++){
             if(i == RIGHT){
                 skinAgentRight.add("images/Personaje principal_derecha_B.png");
@@ -195,72 +214,62 @@ public class Agent extends Actor
             }
         }
     }
-    
-    
-    private void jump(int x, int y){
-        if (direction == RIGHT){ 
-            setImage(skinAgentJump.get(direction-1));
-            if(startJumping == true){
-                setLocation(x + SPEED, y - JUMPSPEED);
-                if(y>highAgent-HIGHJUMP){
-                    x=x+SPEED;
-                    y=y-JUMPSPEED;
-                }
-                else
-                    startJumping=false;
-            }
-            else if(startJumping==false){
-                setLocation(x + SPEED, y + JUMPSPEED);
-                x=x+SPEED;
-                y=y+JUMPSPEED;
-                if(y==highAgent)
-                    jumping=false;
-            }
+
+    private void jump(int x, int y){ 
+        int jumpDirection;
+
+        if (direction==RIGHT){
+            jumpDirection=1;
+            setImage(skinAgentJump.get(0));}
+        else {
+            jumpDirection=-1;
+            setImage(skinAgentJump.get(1));}
+
+        if(y>highAgent-HIGHJUMP && isJumping && y>HIGHLIMIT){
+            y=y-JUMPSPEED;
         }
-        else if(direction == LEFT){
-            setImage(skinAgentJump.get(direction-1));
-            if(startJumping== true){
-                setLocation(x - SPEED, y - JUMPSPEED);
-                if(y>highAgent-HIGHJUMP){
-                    x=x-SPEED;
-                    y=y-JUMPSPEED;
-                }
-                else{
-                    startJumping=false;
-                }
+        else{
+            isJumping=false;  
+        } 
+        if(!isTouching(Box.class))
+            x=x+(SPEED*jumpDirection);
+        setLocation(x , y);
+        if(!isJumping&&isTouching(Platform.class)&&isTouching(Box.class)){
+            y=y+JUMPSPEED;
+            setLocation(x-(SPEED*jumpDirection),y);
+        }
+        else if(!isJumping&&!isTouching(Platform.class)){
+            y=y+JUMPSPEED;
+            setLocation(x,y);
+            if(isTouching(Platform.class)){
+                jumping=false;
             }
-            else if(startJumping==false){
-                setLocation(x - SPEED, y + JUMPSPEED);
-                x=x-SPEED;
-                y=y+JUMPSPEED;  
-                if(y==highAgent)
-                    jumping=false;
-            } 
-        }        
+        } 
     }
-    
+
     public int getPositionX(){
         return getX();   
     }
+
     public int getPositionY(){
         return getY();
     }
+
     public int getDirection(){
         return direction;
     }
-    
+
     private int cadence(String typeWeapon){
         switch(typeWeapon){
-           case "Gun":
-               return 15;
-           case "SemiAutomatic":
-               return 10;
-           case "MachineGun":
-               return 5;
-           default:
-               return 100;
+            case "Gun":
+            return 15;
+            case "SemiAutomatic":
+            return 10;
+            case "MachineGun":
+            return 5;
+            default:
+            return 100;
         }
     }
-    
     
 }

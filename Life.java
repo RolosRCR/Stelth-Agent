@@ -4,7 +4,7 @@ public class Life extends Hud
     private static int life = 100;
     private static int objective = 100;
     private String text = "Life " + "(x" + String.valueOf(lives) + ") : ";
-    
+    private String level;
     public Life(){
         buildSign(text, life);
     }   
@@ -22,10 +22,18 @@ public class Life extends Hud
     
     public void lives(){
         if(life <= 0){
+            
             lives--; 
-            Score.score();
+            Score.passScoreToNewLevel();
             setLife();
-            Greenfoot.setWorld(new Nivel1());
+            level = getWorld().getClass().getName();
+            if(level=="Nivel1"){ 
+            Greenfoot.setWorld(new Nivel1());}
+            else if(level=="Nivel2"){
+                Greenfoot.setWorld(new Nivel2());}
+            else{
+                Greenfoot.setWorld(new Nivel3());}
+            
         }
     }
     
@@ -38,4 +46,5 @@ public class Life extends Hud
          life=100;
          objective=100;
     }
+
 }

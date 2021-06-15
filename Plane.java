@@ -6,7 +6,7 @@ public class Plane extends Enemie
     private int counterRight;
     private int counterLeft;
     private int counterGun=0;
-    private int life=110;
+    private int life=60;
     private double direction;
     private static final String TYPEWEAPON= "Bomb";
     private int levelPower;
@@ -147,5 +147,8 @@ public class Plane extends Enemie
             Score.addScore(Enemie.getPoints());
             Hud.subtractAmountEnemies();
         }
+    }
+    public int getlife(){
+    return life;
     }
 }

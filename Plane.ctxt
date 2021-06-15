@@ -2,6 +2,8 @@
 comment0.target=Plane
 comment1.params=levelPower
 comment1.target=Plane(int)
+comment10.params=
+comment10.target=int\ getlife()
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
@@ -18,4 +20,4 @@ comment8.params=
 comment8.target=void\ setWeapon()
 comment9.params=
 comment9.target=void\ life()
-numComments=10
+numComments=11

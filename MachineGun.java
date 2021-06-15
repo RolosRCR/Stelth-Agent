@@ -10,12 +10,13 @@ public class MachineGun extends Weapon
     private static final int RIGHT=1;
     private static final int LEFT=2;
     private static final int UP=4;
-    
+
     public MachineGun(int direction, int keyWeapon){
         this.direction=direction;
         this.keyWeapon = keyWeapon;
         setImage("images/gunType3.png");   
     }
+
     public void act() 
     { 
         x=getX();
@@ -26,26 +27,8 @@ public class MachineGun extends Weapon
             setLocation(x-SPEED, y);        
         else if(direction == UP)
             setLocation(x , y-SPEED);
-        collision();
+        collision(keyWeapon,HURT);
     }   
-    
-    private void collision(){
-        if(getX() > 590 || getX() < 10 || getY() > 395 || getY() < 10 && isTouching(Platform.class)){
-            getWorld().removeObject(this);
-        }  
-        else if(keyWeapon == KEYWEAPONPLAYER){
-            Actor collided = getOneIntersectingObject(Enemie.class);
-            if(collided != null){
-                Enemie.subtractLife(keyWeapon, HURT);
-            } 
-            
-        }
-        else if(keyWeapon == KEYWEAPONENEMIE){
-            if(isTouching(Agent.class)){
-                getWorld().removeObject(this);
-                Life.subtract(HURT);
-                Enemie.subtractLife(keyWeapon, HURT);
-            }
-        }
-    } 
-}
+
+} 
+

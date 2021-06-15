@@ -13,11 +13,6 @@ public class Enemie extends Actor
     public static int keyWeaponPlayer;
     public static int hurtPlayer;
     
-    public void act() 
-    {
-        // Add your action code here.
-    }    
-    
     public static void setPositionPlayer(int x, int y){
         positionYPlayer = y;
         positionXPlayer = x;

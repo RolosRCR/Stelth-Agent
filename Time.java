@@ -2,9 +2,9 @@ import greenfoot.*;
 
 public class Time extends Hud
 {
-    private int timmer = 2*60*55;
+    private int timmer = 1*60*55;
     private String text;
-    
+    private String level;
     public Time(){
         text = "Time: " + timmer/(60*55) + ": ";
         buildSign(text, timmer/55);
@@ -23,8 +23,14 @@ public class Time extends Hud
     
     private void lives(){
             lives--; 
-            Score.score();
+            Score.passScoreToNewLevel();
             Life.setLife();
+            level = getWorld().getClass().getName();
+            if(level=="Nivel1")
             Greenfoot.setWorld(new Nivel1());
+            else if(level=="Nivel2")
+                Greenfoot.setWorld(new Nivel2());
+            else
+                Greenfoot.setWorld(new Nivel3());
     }
 }
